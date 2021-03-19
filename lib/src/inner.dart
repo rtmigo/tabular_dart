@@ -127,8 +127,8 @@ String generateBar(int width, Align? align) {
 }
 
 /// @param sorting Determines the sorting order.
-String tabulate(List<List<dynamic>> rows,
-    {List<Align>? headerAlign, List<Align>? rowAlign, List<Sort>? sorting, markdownAlign = false}) {
+String tabular(List<List<dynamic>> rows,
+    {List<Align>? headerAlign, List<Align>? rowAlign, List<Sort>? sort, markdownAlign = false}) {
   final headerRow = rows[0].map((e) => cellToString(e)).toList(growable: false);
 
   rows = copyRows(rows);
@@ -144,10 +144,10 @@ String tabulate(List<List<dynamic>> rows,
     return idx;
   }
 
-  if (sorting != null) {
+  if (sort != null) {
     final headerRow = rows[0].map((e) => cellToString(e)).toList(growable: false);
     final sortingIndexes = <int>[]; // 1-based
-    for (var item in sorting) {
+    for (var item in sort) {
       var idx = toColIndex(item.column) + 1;
       //var srt = pair[1] as Order;
 
