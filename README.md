@@ -3,3 +3,5 @@
 [![Actions Status](https://github.com/rtmigo/tabular/workflows/unittest/badge.svg?branch=master)](https://github.com/rtmigo/tabular/actions)
 
 # [tabular](https://github.com/rtmigo/tabular)
+
+Converts Dart lists to a Markdown table.

@@ -7,18 +7,7 @@ import 'package:test/test.dart';
 
 import 'data.dart';
 
-String mini(String s) {
-  final strippedRows = s.split('\n').map((s) => s.trim()).toList();
-  while (strippedRows.isNotEmpty && strippedRows.first.isEmpty) {
-    strippedRows.removeAt(0);
-  }
 
-  while (strippedRows.isNotEmpty && strippedRows.last.isEmpty) {
-    strippedRows.removeLast();
-  }
-
-  return strippedRows.join('\n');
-}
 
 void main() {
 

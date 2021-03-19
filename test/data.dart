@@ -1,3 +1,16 @@
+String mini(String s) {
+  final strippedRows = s.split('\n').map((s) => s.trim()).toList();
+  while (strippedRows.isNotEmpty && strippedRows.first.isEmpty) {
+    strippedRows.removeAt(0);
+  }
+
+  while (strippedRows.isNotEmpty && strippedRows.last.isEmpty) {
+    strippedRows.removeLast();
+  }
+
+  return strippedRows.join('\n');
+}
+
 final months = [
   ['Winter', 'Spring', 'Summer', 'Autumn'],
   ['December', 'March', 'June', 'September'],
