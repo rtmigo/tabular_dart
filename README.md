@@ -4,6 +4,9 @@
 
 # [Tabular](https://github.com/rtmigo/tabular)
 
+Dart library for easily displaying tabular data in a visually appealing 
+ASCII table format.
+
 `tabular` converts a Dart list to a Markdown table.
 
 It is inspired by python's [tabulate](https://pypi.org/project/tabulate/) 
