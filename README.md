@@ -32,7 +32,9 @@ var data = [
     ['Winter', 12, 'December', 31, 258],
 ];
 
-print(tabular(data));
+var string = tabular(data);
+
+print(string);
 ```
 
 ``` text
@@ -84,7 +86,7 @@ print(tabular(data, outerBorder: false));
 ### Add markdown ':' alignment marks
 
 ``` dart
-print(tabular(data, markdownAlign: true));
+tabular(data, markdownAlign: true)
 ```
 
 ``` text
@@ -109,7 +111,7 @@ Winter | 12 | December  |   31 |   258
 ### Sort alphabetically by column 0
 
 ``` dart
-print(tabular(data, sort: [Sort(0)])); // 0 is 'Season'
+tabular(data, sort: [Sort(0)]) // 0 is 'Season'
 ```
 
 ``` text
@@ -131,7 +133,7 @@ Winter | 12 | December  |   31 |   258
 ### Sort by 'Days' descending, and then by 'Sun' ascending
 
 ``` dart
-print(tabular(data, sort: [Sort('Days', false), Sort('Sun')]));
+tabular(data, sort: [Sort('Days', false), Sort('Sun')])
 ```
 
 ``` text
