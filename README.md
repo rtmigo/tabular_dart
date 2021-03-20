@@ -93,7 +93,7 @@ print(tabular(data, sort: [Sort(0)]));
 | Winter |  2 | February  |   28 |   123 |
 | Winter | 12 | December  |   31 |   258 |
 ```
-### Sort by [Days] descending, and then by [Name] ascending
+### Sort by 'Days' descending, and then by 'Name' ascending
 
 ``` dart
 print(tabular(data, sort: [Sort('Days', false), Sort('Name')]));
