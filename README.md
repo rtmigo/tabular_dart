@@ -24,7 +24,7 @@ print(tabular([
 
 ``` dart
 print(tabular([
-    ['Contry', 'Islands'],
+    ['Country', 'Islands'],
     ['Sweden', 221800],
     ['Finland', 188000],
     ['Norway', 55000],
@@ -35,7 +35,7 @@ print(tabular([
 ```
 
 ``` text
-| Contry    | Islands |
+| Country    | Islands |
 |-----------|---------|
 | Sweden    |  221800 |
 | Finland   |  188000 |

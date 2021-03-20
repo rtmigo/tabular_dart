@@ -2,7 +2,7 @@ import 'package:tabular/src/inner.dart';
 
 void main() {
   print(tabular([
-    ['Contry', 'Islands'],
+    ['Country', 'Islands'],
     ['Sweden', 221800],
     ['Finland', 188000],
     ['Norway', 55000],
