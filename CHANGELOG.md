@@ -1,4 +1,4 @@
-# 0.2.0-alpha
+# 0.2.2-alpha
 
 - Added 'format' argument
 - Added 'align' argument
