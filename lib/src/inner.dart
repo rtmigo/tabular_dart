@@ -286,7 +286,7 @@ String generateBar(int width, Side? align) {
 
 /// @param sorting Determines the sorting order.
 String tabular(List<List<dynamic>> rows,
-    {List<Side>? headerAlign, List<Side>? rowAlign, List<Sort>? sort, markdownAlign = false}) {
+    {List<Side>? headerAlign, List<Side>? rowAlign, List<Sort>? sort, markdownAlign = false, outerBorder=true}) {
   final matrix = CellsMatrix(rows);
 
   if (sort != null) {
@@ -302,12 +302,49 @@ String tabular(List<List<dynamic>> rows,
     matrix.sortBy(sortingIndexes);
   }
 
-  var bar = List.generate(
-          matrix.columnsCount,
-          (i) => generateBar(
-              matrix.columns[i].textWidth, markdownAlign ? matrix.columns[i].guessAlign() : null))
-      .join('|');
-  bar = '|' + bar + '|';
+  String bar='';
+  if (outerBorder) {
+    bar+='|';
+  }
+  for (int i=0; i<matrix.columns.length; ++i) {
+    final align = markdownAlign ? matrix.columns[i].guessAlign() : null;
+    final width = matrix.columns[i].textWidth;
+
+
+    final bool isFirstColumn = i==0;
+    final bool isLastColumn = i==matrix.columns.length-1;
+
+    int extra = ((isFirstColumn || isLastColumn) && !outerBorder) ? -1 : 0;
+
+    switch (align) {
+      case null:
+      case Side.left:
+        bar+=('-' * (width + 2 + extra));
+        break;
+      case Side.right:
+        bar+=('-' * (width + 1 + extra) + ':');
+        break;
+      case Side.center:
+        bar+=(':' + '-' * width + ':');
+    }
+
+    if (outerBorder || !isLastColumn) {
+      bar += '|';
+    }
+  }
+  // if (outerBorder) {
+  //   bar+='|';
+  // }
+
+  //
+  // var bar2 = List.generate(
+  //         matrix.columnsCount,
+  //         (i) => generateBar(
+  //             matrix.columns[i].textWidth, markdownAlign ? matrix.columns[i].guessAlign() : null))
+  //     .join('|');
+  // if (outerBorder) {
+  //   bar2 = '|' + bar2 + '|';
+  // }
 
   final formattedRows = <String>[];
 
@@ -319,17 +356,34 @@ String tabular(List<List<dynamic>> rows,
       formattedRows.add(bar);
     }
 
-    var formatted = '|';
+
+    var formatted = '';
+    // if (outerBorder) {
+    //   formatted+='| ';
+    // }
     var iCol = -1;
 
-    for (final cell in row) {
-      formatted += ' ';
+    for (final me in enumerate(row)) {
+      final cell = me.value;
+      if (me.index==0) {
+        if (outerBorder) {
+        formatted += '| '; }
+      } else {
+        formatted += ' | ';
+      }
+
+
+      //formatted += ' | ';
       iCol++;
 
       formatted += alignCell(
           cell.toString(), matrix.columns[iCol].textWidth, matrix.columns[iCol].guessAlign());
+    }
+
+    if (outerBorder) {
       formatted += ' |';
     }
+
     formattedRows.add(formatted);
   }
 

@@ -34,6 +34,9 @@ void main() {
   print(tabular(data, sort: [Sort(0)]));
   print('');
   print(tabular(data, sort: [Sort('Days', false), Sort('Sun')]));
+  print('');
+
+  print(tabular(data, outerBorder: false));
 
   // print('');
   //
