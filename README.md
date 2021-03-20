@@ -50,6 +50,8 @@ or [pretty_table](https://pypi.org/project/prettytable/). But the Tabular is mad
 | Winter | 12 | December  |   31 |   258 |
 ```
 
+#### Add markdown ':' alignment marks
+
 ``` dart
 print(tabular(data, markdownAlign: true));
 ```
@@ -71,7 +73,7 @@ print(tabular(data, markdownAlign: true));
 | Winter | 12 | December  |   31 |   258 |
 ```
 
-### Sort alphabetically by column 0
+#### Sort alphabetically by column 0
 
 ``` dart
 print(tabular(data, sort: [Sort(0)]));
@@ -93,7 +95,7 @@ print(tabular(data, sort: [Sort(0)]));
 | Winter |  2 | February  |   28 |   123 |
 | Winter | 12 | December  |   31 |   258 |
 ```
-### Sort by 'Days' descending, and then by 'Name' ascending
+#### Sort by 'Days' descending, and then by 'Name' ascending
 
 ``` dart
 print(tabular(data, sort: [Sort('Days', false), Sort('Name')]));
