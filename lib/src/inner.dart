@@ -286,7 +286,7 @@ String generateBar(int width, Side? align) {
 
 /// @param sorting Determines the sorting order.
 String tabular(List<List<dynamic>> rows,
-    {List<Side>? headerAlign, List<Side>? rowAlign, List<Sort>? sort, markdownAlign = false, outerBorder=true}) {
+    {List<Side>? headerAlign, List<Side>? rowAlign, List<Sort>? sort, markdownAlign = false, outerBorder=false}) {
   final matrix = CellsMatrix(rows);
 
   if (sort != null) {

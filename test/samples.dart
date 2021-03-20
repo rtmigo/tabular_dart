@@ -29,6 +29,7 @@ void main() {
 
   print(tabular(data));
   print('');
+
   print(tabular(data, markdownAlign: true));
   print('');
   print(tabular(data, sort: [Sort(0)]));
@@ -36,7 +37,7 @@ void main() {
   print(tabular(data, sort: [Sort('Days', false), Sort('Sun')]));
   print('');
 
-  print(tabular(data, outerBorder: false));
+  print(tabular(data, outerBorder: true));
 
   // print('');
   //
