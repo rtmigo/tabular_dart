@@ -1,3 +1,7 @@
+# 0.3.1-beta
+
+- Modified the way to align cells to the center
+
 # 0.3.0-beta
 
 - Documentation additions

@@ -52,8 +52,13 @@ String alignText(String text, int targetWidth, Side align) {
   }
 }
 
+bool centerOdd = true;
+
 String alignTextCenter(String text, int targetWidth) {
-  final half = (targetWidth - text.length) >> 1;
+  final halfD = (targetWidth - text.length)/2;
+
+  final half = centerOdd ? halfD.ceil() : halfD.floor(); //>> 1;
+  centerOdd = !centerOdd;
   text = text.padLeft(text.length + half);
   text = text.padRight(targetWidth);
   return text;
