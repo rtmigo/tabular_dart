@@ -16,6 +16,8 @@ is specifically designed to create tables in the Markdown format that Github und
 ``` dart
 import 'package:tabular/tabular.dart';
 
+...
+
 var data = [
     ['Season', '#', 'Name', 'Days', 'Sun'],
     ['Winter', 1, 'January', 31, 94],
