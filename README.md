@@ -1,5 +1,6 @@
 ![Generic badge](https://img.shields.io/badge/status-it_works-green.svg)
 ![Generic badge](https://img.shields.io/badge/tested_on-VM_|_JS-blue.svg)
+[![pub points](https://badges.bar/tabular/pub%20points)](https://pub.dev/packages/tabular/score)
 [![Actions Status](https://github.com/rtmigo/tabular/workflows/unittest/badge.svg?branch=master)](https://github.com/rtmigo/tabular/actions)
 
 # [Tabular](https://github.com/rtmigo/tabular)
