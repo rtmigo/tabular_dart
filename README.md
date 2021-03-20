@@ -81,7 +81,7 @@ print(tabular(data, sort: [Sort(4)])); // 4 is "Per island"
 
 Or by column name
 ``` dart
-print(tabular(data, sort: [Sort('Per island')]));
+print(tabular(data, sort: [Sort('Per island')])); // "Per island" is 4
 ```
 Output
 ``` text
