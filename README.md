@@ -52,14 +52,13 @@ print(tabular(data));
 | Winter | 12 | December  |   31 |   258 |
 ```
 
+# Formatting
+
 ### Remove border
 
 ``` dart
 print(tabular(data, outerBorder: false));
 ```
-
-# Formatting
-
 
 ``` text
 Season |  # | Name      | Days |   Sun
