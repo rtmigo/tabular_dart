@@ -113,7 +113,7 @@ Winter | 12 | December  |   31 |   258
 ### Modify alignment
 
 ``` dart
-tabular(data, align: {'Days': Side.start, 'Name': Side.end})
+tabular(data, align: {'Name': Side.end, 'Days': Side.start})
 ```
 
 ``` text
