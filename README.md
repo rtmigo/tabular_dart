@@ -74,13 +74,14 @@ print(tabular(data, markdownAlign: true));
 
 ## Sorting
 
-By column name
+By column index
+``` dart
+print(tabular(data, sort: [Sort(4)])); // 4 is "Per island"
+```
+
+Or by column name
 ``` dart
 print(tabular(data, sort: [Sort('Per island')]));
-```
-Or the same by column index
-``` dart
-print(tabular(data, sort: [Sort(4)]));
 ```
 Output
 ``` text
