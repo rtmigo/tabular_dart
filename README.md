@@ -63,7 +63,7 @@ Winter | 12 | December  |   31 |   258
 ### Add border
 
 ``` dart
-print(tabular(data, outerBorder: false));
+tabular(data, outerBorder: false);
 ```
 
 ``` text
