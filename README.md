@@ -71,17 +71,17 @@ print(tabular(data, markdownAlign: true));
 
 # Sorting
 
-## Sorting ascending
+## Sorting
 
-by column name
+By column name
 ``` dart
 print(tabular(data, sort: [Sort('Per island')]));
 ```
-or the same by column index
+Or the same by column index
 ``` dart
 print(tabular(data, sort: [Sort(4)]));
 ```
-output
+Output
 ``` text
 | Continent     | Country   | Islands | Population | Per island |
 |---------------|-----------|---------|------------|------------|
@@ -93,8 +93,8 @@ output
 | Asia          | Japan     |    6853 |  126476461 |    18455.6 |
 ```
 
+Sorting by two columns
 
-## Sorting by two columns
 ``` dart
 print(tabular(data, sort: [Sort(0), Sort(1)]));
 ```
