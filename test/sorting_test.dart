@@ -90,5 +90,84 @@ void main() {
         |   512 |     -1 |    37 |
         '''));
     });
+
+    test('sorting ascending empty last', () {
+
+      final data = [
+        ['First', 'Second', 'Third'],
+        [40, 10, 27],
+        [10, 2348, null],
+        [null, 10, 3],
+        [30, -1, null],
+        [20, 10, 100],
+        [null, 10, 100],
+      ];
+
+      final t = tabular(data, sort: [Sort(0)]);
+      //print(t);
+      expect(t, testTrim(''' 
+        First | Second | Third
+        ------|--------|------
+           10 |   2348 |      
+           20 |     10 |   100
+           30 |     -1 |      
+           40 |     10 |    27
+              |     10 |     3
+              |     10 |   100
+        '''));
+    });
+
+    test('sorting ascending empty first', () {
+
+      final data = [
+        ['First', 'Second', 'Third'],
+        [40, 10, 27],
+        [10, 2348, null],
+        [null, 10, 3],
+        [30, -1, null],
+        [20, 10, 100],
+        [null, 10, 100],
+      ];
+
+      final t = tabular(data, sort: [Sort(0, emptyFirst: true)]);
+      //print(t);
+      expect(t, testTrim(''' 
+        First | Second | Third
+        ------|--------|------
+              |     10 |     3
+              |     10 |   100
+           10 |   2348 |      
+           20 |     10 |   100
+           30 |     -1 |      
+           40 |     10 |    27
+        '''));
+    });
+
+    test('sorting descending empty first', () {
+
+      final data = [
+        ['First', 'Second', 'Third'],
+        [40, 10, 27],
+        [10, 2348, null],
+        [null, 10, 3],
+        [30, -1, null],
+        [20, 10, 100],
+        [null, 10, 100],
+      ];
+
+      final t = tabular(data, sort: [Sort(0, ascending: false, emptyFirst: true)]);
+      //print(t);
+      expect(t, testTrim(''' 
+        First | Second | Third
+        ------|--------|------
+              |     10 |     3
+              |     10 |   100
+           40 |     10 |    27
+           30 |     -1 |      
+           20 |     10 |   100
+           10 |   2348 |      
+        '''));
+    });
+
   });
 }

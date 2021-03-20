@@ -18,28 +18,24 @@ String trimR(String s) {
   return trimLR(s, onlyRight: true);
 }
 
-void removeCommonBlanksAtLeft(List<String> lines) {
+List<String> removeCommonBlanksAtLeft(List<String> lines) {
   while (!lines.any((element) => element.isEmpty)) {
     // while there are no empty lines (so they all have a first char)
     final firstCharSet = lines.map((str) => str[0]).toSet();
-    //print(firstCharSet);
     if (firstCharSet.length==1 && ['\t', ' '].contains(firstCharSet.first)) {
       // all the lines have exactly the same first char, and it's a blank.
       // Recreating the lines list with first char removed
-
-      final newLines = lines.map((str) => str.substring(1)).toList();
-      lines.clear();
-      lines.addAll(newLines);
-
+      lines = lines.map((str) => str.substring(1)).toList();
       continue; // try again, maybe there are more blanks to remove
     }
-    break; // no, there are not common blanks
+    break; // there are no common blanks anymore
   }
+  return lines;
 }
 
 String testTrim(String s) {
 
-  final lines = s.split('\n');
+  var lines = s.split('\n');
 
   // removing empty lines at the beginning of the list
   while (lines.isNotEmpty && lines.first.trim().isEmpty) {
@@ -51,7 +47,7 @@ String testTrim(String s) {
     lines.removeLast();
   }
 
-  removeCommonBlanksAtLeft(lines);
+  lines = removeCommonBlanksAtLeft(lines);
 
   return lines.join('\n');
 }

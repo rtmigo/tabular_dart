@@ -14,11 +14,22 @@ class Align {
   final Side side;
 }
 
+/// Describes the rules by which an individual column should be sorted.
 class Sort {
-  Sort(this.column, {this.ascending = true});
+  Sort(this.column, {this.ascending = true, this.emptyFirst = false});
 
+  /// Identifies the column that we are sorting. This can be either [int],
+  /// which specifies the column index, or [String], which specifies
+  /// the column name.
   dynamic column;
-  bool ascending;
+
+  /// Defines the sort order of cells that have values. That is, cells that are
+  /// not null or not an empty string.
+  final bool ascending;
+
+  /// Specifies whether the empty values should be placed at the beginning
+  /// or at the end of the sorted column.
+  final bool emptyFirst;
 }
 
 String alignText(String text, int targetWidth, Side align) {
@@ -52,6 +63,10 @@ class Cell implements Comparable<Cell> {
     } else {
       return rawCell.toString();
     }
+  }
+
+  bool get isEmpty {
+    return this.rawCell==null || this.rawCell.toString().isEmpty;
   }
 
   bool isNumber() {
@@ -184,7 +199,7 @@ class CellsMatrix {
     throw ArgumentError.value(col, 'col', 'Column not found.');
   }
 
-  void sortBy(List<int> columnIndexes1based) {
+  void sortBy(List<MapEntry<int, Sort>> columnIndexes1based) {
     if (this.columns.isEmpty) {
       return;
     }
@@ -195,25 +210,38 @@ class CellsMatrix {
     // since this.columnsCount>0, only a placeholder can be an empty row
 
     try {
-      this.rows.sort((row1, row2) {
-        if (row1.isEmpty) {
+      this.rows.sort((rowA, rowB) {
+        if (rowA.isEmpty) {
           // header placeholder
           return -1;
         }
 
-        if (row2.isEmpty) {
+        if (rowB.isEmpty) {
           // header placeholder
           return 1;
         }
 
-        for (final colIndex1based in columnIndexes1based) {
-          if (colIndex1based == 0) {
-            throw ArgumentError.value(colIndex1based, 'colIndex');
-          }
+        for (final entry in columnIndexes1based) {
 
-          var idx = colIndex1based.abs() - 1;
-          var cell1 = row1[idx];
-          var cell2 = row2[idx];
+          int columnIndex = entry.key;
+          Sort rule = entry.value;
+
+
+          final A_IS_SMALLER = rule.ascending ? -1 : 1;
+          final A_IS_LARGER = rule.ascending ? 1 : -1;
+
+          //var idx = howWeSortThisColumn.column;
+          var cell1 = rowA[columnIndex];
+          var cell2 = rowB[columnIndex];
+
+          if (cell1.isEmpty || cell2.isEmpty) {
+            if (cell1.isEmpty&&cell2.isEmpty)  {
+              continue;
+            }
+            return cell1.isEmpty
+                   ? (rule.emptyFirst?-1:1)
+                   : (rule.emptyFirst?1:-1);
+          }
 
           //print('Comparing $cell1 $cell2');
 
@@ -223,9 +251,9 @@ class CellsMatrix {
           }
           if (cmp > 0) {
             //print('Ret ${colIndex1based.sign}');
-            return colIndex1based.sign;
+            return A_IS_LARGER; //colIndex1based.sign;
           }
-          return -colIndex1based.sign;
+          return A_IS_SMALLER; // -colIndex1based.sign;
         }
         ;
         return 0;
@@ -285,14 +313,12 @@ String tabular(List<List<dynamic>> rows,
   final matrix = CellsMatrix(rows);
 
   if (sort != null) {
-    final sortingIndexes = <int>[]; // 1-based
-    for (var item in sort) {
-      var idx = matrix.columnIndex(item.column) + 1;
-      if (!item.ascending) {
-        idx = -idx;
-      }
-      sortingIndexes.add(idx);
-    }
+    final sortingIndexes =
+        sort.map((item) => MapEntry<int, Sort>(matrix.columnIndex(item.column), item)).toList();
+    //<MapEntry<int,Sort>>[];
+    // for (var item in sort) {
+    //   sortingIndexes.add(MapEntry<int,Sort>(matrix.columnIndex(item.column), item));
+    // }
 
     matrix.sortBy(sortingIndexes);
   }
