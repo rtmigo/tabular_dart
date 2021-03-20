@@ -5,7 +5,7 @@
 import 'package:tabular/tabular.dart';
 import 'package:test/test.dart';
 
-import 'data.dart';
+import 'common.dart';
 
 
 
@@ -21,16 +21,16 @@ void main() {
 
     //print(t);
 
-    expect(t, mini(''' 
-          | Winter   | Spring | Summer | Autumn    |
-          |----------|--------|--------|-----------|
-          | December | March  | June   | September |
-          | January  | April  | July   | October   |
-          | February | May    | August | November  |
-          
-          
+    expect(trimR(t), trimR(''' 
+Winter   | Spring | Summer | Autumn   
+---------|--------|--------|----------
+December | March  | June   | September
+January  | April  | July   | October  
+February | May    | August | November 
         '''));
   });
+
+
 
   test('digits auto right', () {
     var t = tabular([
@@ -41,36 +41,38 @@ void main() {
       [1.1, 2.2, 3.3],
     ]);
 
-    //print(t);
+    //    print(t);
 
-    expect(t, mini(''' 
-          | First | Second | Third |
-          |-------|--------|-------|
-          |    85 |      2 |    27 |
-          |  1414 |   2348 | 12037 |
-          |   114 |    248 |    37 |
-          |   1.1 |    2.2 |   3.3 |
+    expect(trimR(t), trimR(''' 
+First | Second | Third
+------|--------|------
+   85 |      2 |    27
+ 1414 |   2348 | 12037
+  114 |    248 |    37
+  1.1 |    2.2 |   3.3
         '''));
   });
 
 
-
+//  return;
 
 
   test('markdown align by guess', () {
     var t = tabular(numbers, markdownAlign: true);
-    //#print(t);
+    //print(t);
 
-    expect(t, mini('''
-          | First | Second | Third |
-          |------:|-------:|------:|
-          |    85 |     10 |    27 |
-          |   512 |   2348 | 12037 |
-          |     5 |     10 |     3 |
-          |   512 |     -1 |    37 |
-          |     1 |     10 |   100 |
-        '''));
+    expect(trimR(t), trimR('''
+First | Second | Third
+-----:|-------:|-----:
+   85 |     10 |    27
+  512 |   2348 | 12037
+    5 |     10 |     3
+  512 |     -1 |    37
+    1 |     10 |   100
+'''));
   });
+
+//  return;
 
 
 
@@ -88,15 +90,15 @@ void main() {
 
     //print(t);
 
-    expect(t, mini('''
-      | First | Second | Third |
-      |-------|--------|-------|
-      |    85 |      2 |    27 |
-      |  1414 |    348 |       |
-      |   666 |        |       |
-      |       |    777 |       |
-      |   114 |    248 |    37 |
-      |       |      2 |       |
+    expect(trimR(t), trimR('''
+First | Second | Third
+------|--------|------
+   85 |      2 |    27
+ 1414 |    348 |      
+  666 |        |      
+      |    777 |      
+  114 |    248 |    37
+      |      2 |      
         '''));
   });
 }

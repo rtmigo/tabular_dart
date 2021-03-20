@@ -4,14 +4,14 @@
 import 'package:tabular/tabular.dart';
 import 'package:test/test.dart';
 
-import 'data.dart';
+import 'common.dart';
 
 void main() {
   group('sorting numbers', () {
     test('by single index', () {
-      final t = tabular(numbers, sort: [Sort(1)]);
+      final t = tabular(numbers, sort: [Sort(1)], outerBorder: true);
       //print(t);
-      expect(t, mini(''' 
+      expect(t, trimLR(''' 
         | First | Second | Third |
         |-------|--------|-------|
         |   512 |     -1 |    37 |
@@ -23,9 +23,9 @@ void main() {
     });
 
     test('by indices [1, 0] [asc, asc]', () {
-      final t = tabular(numbers, sort: [Sort(1, true), Sort(0, true)]);
+      final t = tabular(numbers, sort: [Sort(1, true), Sort(0, true)], outerBorder: true);
       //print(t);
-      expect(t, mini('''
+      expect(t, trimLR('''
         | First | Second | Third |
         |-------|--------|-------|
         |   512 |     -1 |    37 |
@@ -37,9 +37,9 @@ void main() {
     });
 
     test('by indices [0, 1] [asc, asc]', () {
-      final t = tabular(numbers, sort: [Sort(0, true), Sort(1, true)]);
+      final t = tabular(numbers, sort: [Sort(0, true), Sort(1, true)], outerBorder: true);
       //print(t);
-      expect(t, mini('''
+      expect(t, trimLR('''
         | First | Second | Third |
         |-------|--------|-------|
         |     1 |     10 |   100 |
@@ -51,8 +51,8 @@ void main() {
     });
 
     test('by two indices, asc-desc', () {
-      final t = tabular(numbers, sort: [Sort(1, false), Sort(0, true)]);
-      expect(t, mini('''
+      final t = tabular(numbers, sort: [Sort(1, false), Sort(0, true)], outerBorder: true);
+      expect(t, trimLR('''
         | First | Second | Third |
         |-------|--------|-------|
         |   512 |   2348 | 12037 |
@@ -64,9 +64,9 @@ void main() {
     });
 
     test('by name, asc-desc', () {
-      final t = tabular(numbers, sort: [Sort('Second', false), Sort('First', true)]);
+      final t = tabular(numbers, sort: [Sort('Second', false), Sort('First', true)], outerBorder: true);
       //print(t);
-      expect(t, mini('''
+      expect(t, trimLR('''
         | First | Second | Third |
         |-------|--------|-------|
         |   512 |   2348 | 12037 |
@@ -78,9 +78,9 @@ void main() {
     });
 
     test('by name, asc-desc', () {
-      final t = tabular(numbers, sort: [Sort('Second', false), Sort('First', true)]);
+      final t = tabular(numbers, sort: [Sort('Second', false), Sort('First', true)], outerBorder: true);
       //print(t);
-      expect(t, mini('''
+      expect(t, trimLR('''
         | First | Second | Third |
         |-------|--------|-------|
         |   512 |   2348 | 12037 |
