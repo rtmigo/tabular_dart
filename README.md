@@ -14,9 +14,6 @@ GitHub understands.
 The library is inspired by python's [tabulate](https://pypi.org/project/tabulate/) 
 and [pretty_table](https://pypi.org/project/prettytable/). 
 
-**At the time of writing, pub.dev does not display the program output 
-correctly. See the [Tabular readme on GitHub](https://github.com/rtmigo/tabular#readme).** 
-
 ----
 
 
@@ -43,6 +40,9 @@ var string = tabular(data);
 
 print(string);
 ```
+
+**At the time of writing, pub.dev does not display the program output 
+correctly. See the [Tabular readme on GitHub](https://github.com/rtmigo/tabular#readme).** 
 
 ``` text
 Season |  # | Name      | Days |   Sun
