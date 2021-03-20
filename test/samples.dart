@@ -13,6 +13,9 @@ void main() {
 
   print(tabular(data));
   print('');
+  print(tabular(data, markdownAlign: true));
+  print('');
+
   print(tabular(data, sort: [Sort('Per island')]));
   print('');
   print(tabular(data, sort: [Sort('Per island', false)]));
