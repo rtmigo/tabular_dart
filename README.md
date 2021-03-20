@@ -7,11 +7,10 @@
 Dart library for easily displaying tabular data in a visually appealing 
 ASCII table format.
 
-`tabular` converts a Dart list to a `String` with a Markdown table.
+Tabular is specifically designed to create tables in the Markdown format that Github understands.
 
 The library is inspired by python's [tabulate](https://pypi.org/project/tabulate/) 
-and [pretty_table](https://pypi.org/project/prettytable/). But the Tabular 
-is specifically designed to create tables in the Markdown format that Github understands.
+and [pretty_table](https://pypi.org/project/prettytable/). 
 
 ----
 
