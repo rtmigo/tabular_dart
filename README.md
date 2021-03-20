@@ -71,7 +71,7 @@ print(tabular(data, markdownAlign: true));
 
 # Sorting
 
-### Sorting ascending
+## Sorting ascending
 
 by column name:
 ``` dart
@@ -93,7 +93,7 @@ output:
 | Asia          | Japan     |    6853 |  126476461 |    18455.6 |
 ```
 
-### Sorting descending
+## Sorting descending
 
 ``` dart
 print(tabular(data, sort: [Sort('Per island', false)]));
@@ -110,7 +110,7 @@ print(tabular(data, sort: [Sort('Per island', false)]));
 | Europe        | Finland   |  188000 |    5540720 |       29.5 |
 ```
 
-### Sorting by two columns
+## Sorting by two columns
 ``` dart
 print(tabular(data, sort: [Sort(0), Sort(1)]));
 ```
