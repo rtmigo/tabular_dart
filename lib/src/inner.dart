@@ -367,31 +367,30 @@ List<Side> createColToAlign<T>(CellsMatrix matrix, Map<dynamic, Side>? align) {
 }
 
 /// Converts a set of cells defined by a two-dimensional list to a Markdown formatted ASCII table.
+/// Returns a string with the table that is ready for printing.
 ///
-/// @param rows Source data for the table. The first of the lists will be the header, the
+/// [rows] is the source data for the table. The first of the lists will be the header, the
 /// others - ordinary lines. The values can be [String]s, [num]s, [null], or any objects. Either
 /// way, they end up being converted to strings.
 ///
-/// @param align Specifies which way all cells in a particular column should be aligned. The keys
+/// [align] specifies which way all cells in a particular column should be aligned. The keys
 /// of this [Map] can be of type [int] then they denote the index of the column, or of type
 /// [String] - then they denote the name of the column.
 ///
-/// @param format Specifies how to convert each cell of a particular column to a row.
+/// [format] specifies how to convert each cell of a particular column to a row.
 /// This conversion occurs after sorting, but before alignment. The keys of this [Map] can be
 /// of type [int] then they denote the index of the column, or of type [String] - then they
 /// denote the name of the column.
 ///
-/// @param sort Determines the sorting order. Sorting can take place in several columns at once.
+/// [sort] determines the sorting order. Sorting can take place in several columns at once.
 /// Priority will be given to the ones at the beginning of the list.
 ///
-/// @param markdownAlign Determines whether to add the ':' characters to the delimiter under
+/// [markdownAlign] determines whether to add the ':' characters to the delimiter under
 /// the header. These symbols tell services like GitHub which way to align the columns after
 /// converting the table to HTML.
 ///
-/// @param outerBorder Determines whether to add vertical borders to the left and right sides
+/// [outerBorder] determines whether to add vertical borders to the left and right sides
 /// of the table.
-///
-/// @returns A string containing a converted ASCII table that is ready for printing.
 String tabular(List<List<dynamic>> rows,
     {Map<dynamic, Side>? align,
     Map<dynamic, FormatCell>? format,
