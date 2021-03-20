@@ -54,6 +54,7 @@ or [pretty_table](https://pypi.org/project/prettytable/). But the Tabular is mad
 print(tabular(data, markdownAlign: true));
 ```
 
+``` text
 | Season |  # | Name      | Days |   Sun |
 |--------|---:|-----------|-----:|------:|
 | Winter |  1 | January   |   31 |    94 |
@@ -68,6 +69,7 @@ print(tabular(data, markdownAlign: true));
 | Autumn | 10 | October   |   31 |  5041 |
 | Autumn | 11 | November  |   30 |  2302 |
 | Winter | 12 | December  |   31 |   258 |
+```
 
 # Formatting
 
