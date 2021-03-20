@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: MIT
 
 
+import 'package:tabular/src/inner.dart';
 import 'package:tabular/tabular.dart';
 import 'package:test/test.dart';
 
@@ -28,6 +29,28 @@ void main() {
       January  | April  | July   | October  
       February | May    | August | November 
         '''));
+  });
+
+  test('override align', () {
+
+    var t = tabular([
+      ['Winter',    'Spring', 'Summer', 'Autumn'],
+      ['December',  'March',  'June',   'September'],
+      ['January',   'April',  'July',   'October'],
+      ['February',  'May',    'August', 'November']
+    ],
+      align: {3: Side.end, 'Summer': Side.end},
+    );
+
+    print(t);
+
+    expect(t, testTrim(''' 
+      Winter   | Spring | Summer |    Autumn
+      ---------|--------|--------|----------
+      December | March  |   June | September
+      January  | April  |   July |   October
+      February | May    | August |  November 
+        '''.trimRight()));
   });
 
 

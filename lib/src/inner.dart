@@ -5,7 +5,7 @@ import 'dart:math';
 
 import 'package:quiver/iterables.dart' show enumerate;
 
-enum Side { left, right, center }
+enum Side { start, end, center }
 
 class Align {
   Align(this.column, this.side);
@@ -34,9 +34,9 @@ class Sort {
 
 String alignText(String text, int targetWidth, Side align) {
   switch (align) {
-    case Side.left:
+    case Side.start:
       return text.padRight(targetWidth);
-    case Side.right:
+    case Side.end:
       return text.padLeft(targetWidth);
     case Side.center:
       return alignTextCenter(text, targetWidth);
@@ -80,7 +80,7 @@ class Cell implements Comparable<Cell> {
   }
 
   Side guessAlign() {
-    return isNumber() ? Side.right : Side.left;
+    return isNumber() ? Side.end : Side.start;
   }
 
   num? tryGetNum() {
@@ -133,11 +133,11 @@ class CellsColumn {
       if (result == null) {
         result = cell.guessAlign();
       } else if (cell.guessAlign() != result) {
-        return Side.left; // default
+        return Side.start; // default
       }
     }
 
-    result ??= Side.left;
+    result ??= Side.start;
     return result;
   }
 }
@@ -199,10 +199,15 @@ class CellsMatrix {
     throw ArgumentError.value(col, 'col', 'Column not found.');
   }
 
-  void sortBy(List<MapEntry<int, Sort>> columnIndexes1based) {
+  void sortBy(List<Sort> rules) {
+
     if (this.columns.isEmpty) {
       return;
     }
+    
+    final indexedRules = rules.map(
+            (e) => MapEntry<int, Sort>(this.columnIndex(e.column), e)).toList();
+
 
     // replacing header with empty placeholder
     final temporaryRemovedHeader = this.rows[0];
@@ -221,7 +226,7 @@ class CellsMatrix {
           return 1;
         }
 
-        for (final entry in columnIndexes1based) {
+        for (final entry in indexedRules) {
 
           int columnIndex = entry.key;
           Sort rule = entry.value;
@@ -303,32 +308,69 @@ Iterable<dynamic> enumerateColumn(List<List<dynamic>> rows, int colIndex) sync* 
   }
 }
 
+extension ListExt<T> on List<T> {
+  void setFilling(int index, T value, T empty) {
+    while (this.length<index) {
+      this.add(empty);
+    }
+    if (this.length>index) {
+      this[index] = value;
+    } else {
+      this.add(value);
+    }
+  }
+
+  T tryGet(int index, T empty) {
+    return (this.length>index) ? this[index] : empty;
+  }
+}
+
+/// Transforms a map with optional alignment rules to a list will all elements set.
+/// @returns A `result` list such as `result[columnIndex]` is the alignment for the column. 
+List<Side> createColToAlign(CellsMatrix matrix, Map<dynamic,Side>? align) {
+
+  List<Side?> colToAlignNullable = <Side?>[];
+  if (align != null) {
+    for (final me in align.entries) {
+      int iCol = matrix.columnIndex(me.key);
+      colToAlignNullable.setFilling(iCol, me.value, null);
+    }
+  }
+  for (var iCol = 0; iCol < matrix.columns.length; iCol++) {
+    if (colToAlignNullable.tryGet(iCol, null) == null) {
+      colToAlignNullable.setFilling(iCol, matrix.columns[iCol].guessAlign(), null);
+    }
+  }
+
+  List<Side> colToAlign = colToAlignNullable.map((e) => e!).toList();
+
+  return colToAlign;
+}
+
 /// @param sort Determines the sorting order.
 String tabular(List<List<dynamic>> rows,
     {List<Side>? headerAlign,
     List<Side>? rowAlign,
+      Map<dynamic,Side>? align,
     List<Sort>? sort,
     markdownAlign = false,
     outerBorder = false}) {
   final matrix = CellsMatrix(rows);
 
   if (sort != null) {
-    final sortingIndexes =
-        sort.map((item) => MapEntry<int, Sort>(matrix.columnIndex(item.column), item)).toList();
-    //<MapEntry<int,Sort>>[];
-    // for (var item in sort) {
-    //   sortingIndexes.add(MapEntry<int,Sort>(matrix.columnIndex(item.column), item));
-    // }
-
-    matrix.sortBy(sortingIndexes);
+    matrix.sortBy(sort);
   }
+
+  List<Side> colToAlign = createColToAlign(matrix, align);
+
+  //assert(c)
 
   String bar = '';
   if (outerBorder) {
     bar += '|';
   }
   for (int i = 0; i < matrix.columns.length; ++i) {
-    final align = markdownAlign ? matrix.columns[i].guessAlign() : null;
+    final align = markdownAlign ? colToAlign[i] : null;
     final width = matrix.columns[i].textWidth;
 
     final bool isFirstColumn = i == 0;
@@ -338,10 +380,10 @@ String tabular(List<List<dynamic>> rows,
 
     switch (align) {
       case null:
-      case Side.left:
+      case Side.start:
         bar += ('-' * (width + 2 + extra));
         break;
-      case Side.right:
+      case Side.end:
         bar += ('-' * (width + 1 + extra) + ':');
         break;
       case Side.center:
@@ -376,11 +418,9 @@ String tabular(List<List<dynamic>> rows,
       } else {
         formatted += ' | ';
       }
-
       iCol++;
-
       formatted += alignText(
-          cell.toString(), matrix.columns[iCol].textWidth, matrix.columns[iCol].guessAlign());
+          cell.toString(), matrix.columns[iCol].textWidth, colToAlign[iCol]);
     }
 
     if (outerBorder) {

@@ -28,6 +28,10 @@ void main() {
   print(title('WITH MARKDOWN ":"'));
   print(tabular(data, markdownAlign: true));
 
+  print(title('WITH MODIFIED ALIGNMENT'));
+  print(tabular(data, align: {'Days': Side.start, 'Name': Side.end}));
+
+
   print(title('SORTED BY FIRST COLUMN'));
   print(tabular(data, sort: [Sort(0)]));
 
