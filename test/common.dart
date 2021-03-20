@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: (c) 2021 Art Galkin <github.com/rtmigo>
+// SPDX-License-Identifier: MIT
+
 String trimLR(String s, {onlyRight = false}) {
   final strippedRows = s.split('\n').map((s) => onlyRight ? s.trimRight() : s.trim()).toList();
   while (strippedRows.isNotEmpty && strippedRows.first.isEmpty) {
@@ -14,6 +17,17 @@ String trimLR(String s, {onlyRight = false}) {
 String trimR(String s) {
   return trimLR(s, onlyRight: true);
 }
+
+final zdata = [
+  ['Continent', 'Country', 'Islands', 'Population', 'Per island'],
+  ['Europe', 'Norway', 55000, 5421241, 98.6],
+  ['North America', 'Canada', 52455, 37742154, 719.5],
+  ['Asia', 'Indonesia', 17508, 273523615, 15622.8],
+  ['Europe', 'Finland', 188000, 5540720, 29.5],
+  ['Asia', 'Japan', 6853, 126476461, 18455.6],
+  ['Europe', 'Sweden', 221800, 10099265, 45.5],
+];
+
 
 final months = [
   ['Winter', 'Spring', 'Summer', 'Autumn'],

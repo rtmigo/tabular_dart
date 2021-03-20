@@ -23,7 +23,7 @@ void main() {
     });
 
     test('by indices [1, 0] [asc, asc]', () {
-      final t = tabular(numbers, sort: [Sort(1, true), Sort(0, true)], outerBorder: true);
+      final t = tabular(numbers, sort: [Sort(1), Sort(0)], outerBorder: true);
       //print(t);
       expect(t, trimLR('''
         | First | Second | Third |
@@ -37,7 +37,7 @@ void main() {
     });
 
     test('by indices [0, 1] [asc, asc]', () {
-      final t = tabular(numbers, sort: [Sort(0, true), Sort(1, true)], outerBorder: true);
+      final t = tabular(numbers, sort: [Sort(0), Sort(1)], outerBorder: true);
       //print(t);
       expect(t, trimLR('''
         | First | Second | Third |
@@ -51,7 +51,7 @@ void main() {
     });
 
     test('by two indices, asc-desc', () {
-      final t = tabular(numbers, sort: [Sort(1, false), Sort(0, true)], outerBorder: true);
+      final t = tabular(numbers, sort: [Sort(1, ascending: false), Sort(0)], outerBorder: true);
       expect(t, trimLR('''
         | First | Second | Third |
         |-------|--------|-------|
@@ -64,7 +64,7 @@ void main() {
     });
 
     test('by name, asc-desc', () {
-      final t = tabular(numbers, sort: [Sort('Second', false), Sort('First', true)], outerBorder: true);
+      final t = tabular(numbers, sort: [Sort('Second', ascending: false), Sort('First')], outerBorder: true);
       //print(t);
       expect(t, trimLR('''
         | First | Second | Third |
@@ -78,7 +78,7 @@ void main() {
     });
 
     test('by name, asc-desc', () {
-      final t = tabular(numbers, sort: [Sort('Second', false), Sort('First', true)], outerBorder: true);
+      final t = tabular(numbers, sort: [Sort('Second', ascending: false), Sort('First')], outerBorder: true);
       //print(t);
       expect(t, trimLR('''
         | First | Second | Third |

@@ -15,7 +15,7 @@ class Align {
 }
 
 class Sort {
-  Sort(this.column, [this.ascending = true]);
+  Sort(this.column, {this.ascending = true});
 
   dynamic column;
   bool ascending;
@@ -275,7 +275,7 @@ Iterable<dynamic> enumerateColumn(List<List<dynamic>> rows, int colIndex) sync* 
   }
 }
 
-/// @param sorting Determines the sorting order.
+/// @param sort Determines the sorting order.
 String tabular(List<List<dynamic>> rows,
     {List<Side>? headerAlign,
     List<Side>? rowAlign,

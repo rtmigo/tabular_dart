@@ -7,7 +7,8 @@
 Dart library for easily displaying tabular data in a visually appealing 
 ASCII table format.
 
-Tabular is specifically designed to create tables in the Markdown format that Github understands.
+Tabular is specifically designed to create tables in the Markdown format that 
+GitHub understands.
 
 The library is inspired by python's [tabulate](https://pypi.org/project/tabulate/) 
 and [pretty_table](https://pypi.org/project/prettytable/). 
@@ -55,9 +56,6 @@ Autumn | 10 | October   |   31 |  5041
 Autumn | 11 | November  |   30 |  2302
 Winter | 12 | December  |   31 |   258
 ```
-
-
-
 
 
 # Formatting
@@ -135,7 +133,7 @@ Winter | 12 | December  |   31 |   258
 ### Sort by 'Days' descending, and then by 'Sun' ascending
 
 ``` dart
-tabular(data, sort: [Sort('Days', false), Sort('Sun')])
+tabular(data, sort: [Sort('Days', ascending: false), Sort('Sun')])
 ```
 
 ``` text
