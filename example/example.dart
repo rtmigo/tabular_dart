@@ -29,7 +29,7 @@ void main() {
   print(tabular(data, markdownAlign: true));
 
   print(title('WITH MODIFIED ALIGNMENT'));
-  print(tabular(data, align: {'Days': Side.start, 'Name': Side.end}));
+  print(tabular(data, align: {'Name': Side.center, 'Sun': Side.start}));
 
 
   print(title('SORTED BY FIRST COLUMN'));
