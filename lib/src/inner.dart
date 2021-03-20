@@ -42,7 +42,6 @@ class Sort {
 }
 
 class Aligner {
-
   String alignText(String text, int targetWidth, Side align) {
     switch (align) {
       case Side.start:
@@ -188,7 +187,6 @@ class CellsMatrix {
     // creating [rows] field
     for (final srcRow in rawRows) {
       // copying raw cell data into list on Cells
-
       final newRow = srcRow.map((raw) => Cell(raw)).toList();
       // adding empty cells to the end of the row, if needed
       while (newRow.length < columnsCount) {
@@ -197,14 +195,17 @@ class CellsMatrix {
       this.rows.add(newRow);
     }
 
+    // [rows] now have equal length, and the [header] returns row 0
+    assert(this.rows.every((row) => row.length == this.header.length));
+
     // creating the columns list
     for (var i = 0; i < columnsCount; ++i) {
       this.columns.add(CellsColumn(this, i));
     }
 
-    // now, with [rows] initialized we have [header],
-    // so we can locate columns by their dynamic identifiers.
-    // We also have now have [columns]
+    // assigning [format] to cells if its set in the argument
+    assert(this.rows.isNotEmpty); // can use columnIndex
+    assert(this.columns.isNotEmpty); // can iterate cells by column
     if (format != null) {
       for (final me in format.entries) {
         final iCol = this.columnIndex(me.key);
@@ -213,8 +214,6 @@ class CellsMatrix {
         }
       }
     }
-
-    assert(this.rows.isNotEmpty);
   }
 
   List<Cell> get header => rows[0];
@@ -271,9 +270,6 @@ class CellsMatrix {
           int columnIndex = entry.key;
           Sort rule = entry.value;
 
-          final A_IS_SMALLER = rule.ascending ? -1 : 1;
-          final A_IS_LARGER = rule.ascending ? 1 : -1;
-
           var cell1 = rowA[columnIndex];
           var cell2 = rowB[columnIndex];
 
@@ -283,6 +279,9 @@ class CellsMatrix {
             }
             return cell1.isEmpty ? (rule.emptyFirst ? -1 : 1) : (rule.emptyFirst ? 1 : -1);
           }
+
+          final A_IS_SMALLER = rule.ascending ? -1 : 1;
+          final A_IS_LARGER = rule.ascending ? 1 : -1;
 
           int cmp = cell1.compareTo(cell2);
           if (cmp == 0) {
@@ -302,34 +301,8 @@ class CellsMatrix {
   }
 }
 
-/// @param rowsOnly Rows to be sorted (without the header).
-/// @param columnIndexes Determines the sorting order. `[2,-3,1]` means, that rows must
-/// be sorted by column 2 ascending, or -3 descending, or 1 ascending.
-void sortRo(List<List<dynamic>> rowsOnly, List<int> columnIndexes1based) {
-  rowsOnly.sort((row1, row2) {
-    for (final colIndex1based in columnIndexes1based) {
-      if (colIndex1based == 0) {
-        throw ArgumentError.value(colIndex1based, 'colIndex');
-      }
-      var idx = colIndex1based.abs() - 1;
-      var cell1 = row1[idx];
-      var cell2 = row2[idx];
-
-      if (cell1 == cell2) {
-        continue;
-      }
-      if (cell1 > cell2) {
-        return colIndex1based.sign;
-      }
-      return -colIndex1based.sign;
-    }
-    ;
-    return 0;
-  });
-}
-
 extension ListExt<T> on List<T> {
-  void setFilling(int index, T value, T empty) {
+  void fillAndSet(int index, T value, T empty) {
     while (this.length < index) {
       this.add(empty);
     }
@@ -352,12 +325,12 @@ List<Side> createColToAlign<T>(CellsMatrix matrix, Map<dynamic, Side>? align) {
   if (align != null) {
     for (final me in align.entries) {
       int iCol = matrix.columnIndex(me.key);
-      colToAlignNullable.setFilling(iCol, me.value, null);
+      colToAlignNullable.fillAndSet(iCol, me.value, null);
     }
   }
   for (var iCol = 0; iCol < matrix.columns.length; iCol++) {
     if (colToAlignNullable.tryGet(iCol, null) == null) {
-      colToAlignNullable.setFilling(iCol, matrix.columns[iCol].guessAlign(), null);
+      colToAlignNullable.fillAndSet(iCol, matrix.columns[iCol].guessAlign(), null);
     }
   }
 
