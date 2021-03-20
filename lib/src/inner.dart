@@ -5,6 +5,8 @@ import 'dart:math';
 
 import 'package:quiver/iterables.dart' show enumerate;
 
+enum Side { left, right, center }
+
 class Align {
   Align(this.column, this.side);
 
@@ -12,22 +14,25 @@ class Align {
   final Side side;
 }
 
-enum Side { left, right, center }
+class Sort {
+  Sort(this.column, [this.ascending = true]);
 
-int maxCellLength(List<String> row) => row.map((cell) => cell.length).reduce(max);
+  dynamic column;
+  bool ascending;
+}
 
-String alignCell(String text, int targetWidth, Side align) {
+String alignText(String text, int targetWidth, Side align) {
   switch (align) {
     case Side.left:
       return text.padRight(targetWidth);
     case Side.right:
       return text.padLeft(targetWidth);
     case Side.center:
-      return alignCenter(text, targetWidth);
+      return alignTextCenter(text, targetWidth);
   }
 }
 
-String alignCenter(String text, int targetWidth) {
+String alignTextCenter(String text, int targetWidth) {
   final half = (targetWidth - text.length) >> 1;
   text = text.padLeft(text.length + half);
   text = text.padRight(targetWidth);
@@ -125,11 +130,17 @@ class CellsColumn {
 class CellsMatrix {
   CellsMatrix(List<List<dynamic>> rawRows) {
     if (rawRows.length <= 1) {
-      throw ArgumentError.value(rawRows.length, 'rawRows.length');
+      throw ArgumentError.value(rawRows.length, 'rawRows.length',
+          'Must contain at least two items: the header and the first row.');
     }
 
     // determining the maximum count of cells in each row
-    this.columnsCount = rawRows.map<int>((r) => r.length).reduce(max);
+    final columnsCount = rawRows.map<int>((r) => r.length).reduce(max);
+
+    if (columnsCount <= 0) {
+      throw ArgumentError('rawRows contains zero columns.');
+    }
+
     // creating [rows] field
     for (final srcRow in rawRows) {
       // copying raw cell data into list on Cells
@@ -148,10 +159,9 @@ class CellsMatrix {
     assert(this.rows.isNotEmpty);
   }
 
-  List<Cell> get headerRow => rows[0];
+  List<Cell> get header => rows[0];
 
   List<List<Cell>> rows = <List<Cell>>[];
-  late int columnsCount;
 
   Iterable<Cell> iterCellsByColumn(int columnIdx) sync* {
     for (var i = 0; i < rows.length; ++i) {
@@ -166,7 +176,7 @@ class CellsMatrix {
       return col;
     }
     String colStr = col.toString();
-    for (var me in enumerate(headerRow)) {
+    for (var me in enumerate(header)) {
       if (me.value.toString() == colStr) {
         return me.index;
       }
@@ -175,7 +185,7 @@ class CellsMatrix {
   }
 
   void sortBy(List<int> columnIndexes1based) {
-    if (this.columnsCount <= 0) {
+    if (this.columns.isEmpty) {
       return;
     }
 
@@ -265,25 +275,6 @@ Iterable<dynamic> enumerateColumn(List<List<dynamic>> rows, int colIndex) sync* 
   }
 }
 
-class Sort {
-  Sort(this.column, [this.ascending = true]);
-
-  dynamic column;
-  bool ascending;
-}
-
-String generateBar(int width, Side? align) {
-  switch (align) {
-    case null:
-    case Side.left:
-      return '-' * (width + 2);
-    case Side.right:
-      return '-' * (width + 1) + ':';
-    case Side.center:
-      return ':' + '-' * width + ':';
-  }
-}
-
 /// @param sorting Determines the sorting order.
 String tabular(List<List<dynamic>> rows,
     {List<Side>? headerAlign,
@@ -362,7 +353,7 @@ String tabular(List<List<dynamic>> rows,
 
       iCol++;
 
-      formatted += alignCell(
+      formatted += alignText(
           cell.toString(), matrix.columns[iCol].textWidth, matrix.columns[iCol].guessAlign());
     }
 
