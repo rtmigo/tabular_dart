@@ -24,19 +24,23 @@ print(tabular([
 
 ``` dart
 print(tabular([
-    ['First', 'Second', 'Third'],
-    [85, 2, 27],
-    [1414, 2348, 12037],
-    [114, 248, 037],
-    [1.1, 2.2, 3.3],
-]);
+    ['Contry', 'Islands'],
+    ['Sweden', 221800],
+    ['Finland', 188000],
+    ['Norway', 55000],
+    ['Canada', 52455],
+    ['Indonesia', 17508],
+    ['Japan', 6853],
+]));
 ```
 
 ``` text
-| First | Second | Third |
-|-------|--------|-------|
-|    85 |      2 |    27 |
-|  1414 |   2348 | 12037 |
-|   114 |    248 |    37 |
-|   1.1 |    2.2 |   3.3 |
+| Contry    | Islands |
+|-----------|---------|
+| Sweden    |  221800 |
+| Finland   |  188000 |
+| Norway    |   55000 |
+| Canada    |   52455 |
+| Indonesia |   17508 |
+| Japan     |    6853 |
 ```
