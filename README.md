@@ -73,15 +73,15 @@ print(tabular(data, markdownAlign: true));
 
 ## Sorting ascending
 
-by column name:
+by column name
 ``` dart
 print(tabular(data, sort: [Sort('Per island')]));
 ```
-or the same by column index:
+or the same by column index
 ``` dart
 print(tabular(data, sort: [Sort(4)]));
 ```
-output:
+output
 ``` text
 | Continent     | Country   | Islands | Population | Per island |
 |---------------|-----------|---------|------------|------------|
