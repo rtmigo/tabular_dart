@@ -71,9 +71,49 @@ print(tabular(data, markdownAlign: true));
 | Winter | 12 | December  |   31 |   258 |
 ```
 
-Sort alphabetically by column 0
+### Sort alphabetically by column 0
+
 ``` dart
 print(tabular(data, sort: [Sort(0)]));
+```
+
+``` text
+| Season |  # | Name      | Days |   Sun |
+|--------|----|-----------|------|-------|
+| Autumn |  9 | September |   30 |  7025 |
+| Autumn | 10 | October   |   31 |  5041 |
+| Autumn | 11 | November  |   30 |  2302 |
+| Spring |  3 | March     |   31 |    42 |
+| Spring |  4 | April     |   30 |   243 |
+| Spring |  5 | May       |   31 |  5523 |
+| Summer |  6 | June      |   30 | 11251 |
+| Summer |  7 | July      |   31 | 17451 |
+| Summer |  8 | August    |   31 | 18707 |
+| Winter |  1 | January   |   31 |    94 |
+| Winter |  2 | February  |   28 |   123 |
+| Winter | 12 | December  |   31 |   258 |
+```
+### Sort by [Days] descending, and then by [Name] ascending
+
+``` dart
+print(tabular(data, sort: [Sort('Days', false), Sort('Name')]));
+```
+
+``` text
+| Season |  # | Name      | Days |   Sun |
+|--------|----|-----------|------|-------|
+| Summer |  8 | August    |   31 | 18707 |
+| Winter | 12 | December  |   31 |   258 |
+| Winter |  1 | January   |   31 |    94 |
+| Summer |  7 | July      |   31 | 17451 |
+| Spring |  3 | March     |   31 |    42 |
+| Spring |  5 | May       |   31 |  5523 |
+| Autumn | 10 | October   |   31 |  5041 |
+| Spring |  4 | April     |   30 |   243 |
+| Summer |  6 | June      |   30 | 11251 |
+| Autumn | 11 | November  |   30 |  2302 |
+| Autumn |  9 | September |   30 |  7025 |
+| Winter |  2 | February  |   28 |   123 |
 ```
 
 

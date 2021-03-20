@@ -32,6 +32,9 @@ void main() {
   print(tabular(data, markdownAlign: true));
   print('');
   print(tabular(data, sort: [Sort(0)]));
+  print('');
+  print(tabular(data, sort: [Sort('Days', false), Sort('Name')]));
+
   // print('');
   //
   // print(tabular(data, sort: [Sort('Per island')]));
