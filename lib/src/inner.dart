@@ -3,17 +3,26 @@
 
 import 'dart:math';
 
-enum Align { left, right, center }
+import 'package:quiver/iterables.dart' show enumerate;
+
+class Align {
+  Align(this.column, this.side);
+
+  final dynamic column;
+  final Side side;
+}
+
+enum Side { left, right, center }
 
 int maxCellLength(List<String> row) => row.map((cell) => cell.length).reduce(max);
 
-String alignCell(String text, int targetWidth, Align align) {
+String alignCell(String text, int targetWidth, Side align) {
   switch (align) {
-    case Align.left:
+    case Side.left:
       return text.padRight(targetWidth);
-    case Align.right:
+    case Side.right:
       return text.padLeft(targetWidth);
-    case Align.center:
+    case Side.center:
       return alignCenter(text, targetWidth);
   }
 }
@@ -25,7 +34,197 @@ String alignCenter(String text, int targetWidth) {
   return text;
 }
 
-String cellToString(dynamic cell) => cell.toString();
+class Cell implements Comparable<Cell> {
+  Cell(this.rawCell, {this.nullReplacement = ''});
+
+  final dynamic rawCell;
+  final String nullReplacement;
+
+  @override
+  String toString() {
+    if (rawCell == null) {
+      return nullReplacement;
+    } else {
+      return rawCell.toString();
+    }
+  }
+
+  bool isNumber() {
+    if (rawCell == null || rawCell == '' || rawCell is num) {
+      return true;
+    }
+
+    final s = rawCell.toString();
+
+    return int.tryParse(s) != null || double.tryParse(s) != null;
+  }
+
+  Side guessAlign() {
+    return isNumber() ? Side.right : Side.left;
+  }
+
+  num? tryGetNum() {
+    // todo cache
+    if (this.rawCell is num) {
+      return this.rawCell;
+    }
+    return int.tryParse(this.rawCell.toString()) ?? double.tryParse(this.rawCell.toString());
+  }
+
+  @override
+  int compareTo(Cell other) {
+    num? thisNum = this.tryGetNum();
+    if (thisNum != null) {
+      num? otherNum = other.tryGetNum();
+      if (otherNum != null) {
+        return thisNum.compareTo(otherNum);
+      }
+    }
+    // todo null
+    return this.toString().compareTo(other.toString());
+  }
+}
+
+class CellsColumn {
+  CellsColumn(this.matrix, this.index) {
+    if (cells.length <= 1) {
+      throw ArgumentError.value(cells.length, 'cells.length');
+    }
+  }
+
+  final int index;
+  final CellsMatrix matrix;
+
+  Iterable<Cell> get cells sync* {
+    for (var i = 0; i < matrix.rows.length; ++i) {
+      yield this.matrix.rows[i][this.index];
+    }
+  }
+
+  int get textWidth {
+    // todo cache
+    return this.cells.map<int>((cell) => cell.toString().length).reduce(max);
+  }
+
+  Side guessAlign() {
+    Side? result;
+
+    for (final cell in this.cells.skip(1)) {
+      if (result == null) {
+        result = cell.guessAlign();
+      } else if (cell.guessAlign() != result) {
+        return Side.left; // default
+      }
+    }
+
+    result ??= Side.left;
+    return result;
+  }
+}
+
+class CellsMatrix {
+  CellsMatrix(List<List<dynamic>> rawRows) {
+    if (rawRows.length <= 1) {
+      throw ArgumentError.value(rawRows.length, 'rawRows.length');
+    }
+
+    // determining the maximum count of cells in each row
+    this.columnsCount = rawRows.map<int>((r) => r.length).reduce(max);
+    // creating [rows] field
+    for (final srcRow in rawRows) {
+      // copying raw cell data into list on Cells
+      final newRow = srcRow.map((raw) => Cell(raw)).toList();
+      // adding empty cells to the end of the row, if needed
+      while (newRow.length < columnsCount) {
+        newRow.add(Cell(null));
+      }
+      this.rows.add(newRow);
+    }
+    // creating the columns list
+    for (var i = 0; i < columnsCount; ++i) {
+      this.columns.add(CellsColumn(this, i));
+    }
+
+    assert(this.rows.isNotEmpty);
+  }
+
+  List<Cell> get headerRow => rows[0];
+
+  List<List<Cell>> rows = <List<Cell>>[];
+  late int columnsCount;
+
+  Iterable<Cell> iterCellsByColumn(int columnIdx) sync* {
+    for (var i = 0; i < rows.length; ++i) {
+      yield rows[i][columnIdx];
+    }
+  }
+
+  List<CellsColumn> columns = <CellsColumn>[];
+
+  int columnIndex(dynamic col) {
+    if (col is int) {
+      return col;
+    }
+    String colStr = col.toString();
+    for (var me in enumerate(headerRow)) {
+      if (me.value.toString() == colStr) {
+        return me.index;
+      }
+    }
+    throw ArgumentError.value(col, 'col', 'Column not found.');
+  }
+
+  void sortBy(List<int> columnIndexes1based) {
+    if (this.columnsCount <= 0) {
+      return;
+    }
+
+    // replacing header with empty placeholder
+    final temporaryRemovedHeader = this.rows[0];
+    this.rows[0] = [];
+    // since this.columnsCount>0, only a placeholder can be an empty row
+
+    try {
+      this.rows.sort((row1, row2) {
+        if (row1.isEmpty) {
+          // header placeholder
+          return -1;
+        }
+
+        if (row2.isEmpty) {
+          // header placeholder
+          return 1;
+        }
+
+        for (final colIndex1based in columnIndexes1based) {
+          if (colIndex1based == 0) {
+            throw ArgumentError.value(colIndex1based, 'colIndex');
+          }
+
+          var idx = colIndex1based.abs() - 1;
+          var cell1 = row1[idx];
+          var cell2 = row2[idx];
+
+          //print('Comparing $cell1 $cell2');
+
+          int cmp = cell1.compareTo(cell2);
+          if (cmp == 0) {
+            continue;
+          }
+          if (cmp > 0) {
+            //print('Ret ${colIndex1based.sign}');
+            return colIndex1based.sign;
+          }
+          return -colIndex1based.sign;
+        }
+        ;
+        return 0;
+      });
+    } finally {
+      this.rows[0] = temporaryRemovedHeader;
+    }
+  }
+}
 
 /// @param rowsOnly Rows to be sorted (without the header).
 /// @param columnIndexes Determines the sorting order. `[2,-3,1]` means, that rows must
@@ -36,20 +235,14 @@ void sortRo(List<List<dynamic>> rowsOnly, List<int> columnIndexes1based) {
       if (colIndex1based == 0) {
         throw ArgumentError.value(colIndex1based, 'colIndex');
       }
-
       var idx = colIndex1based.abs() - 1;
       var cell1 = row1[idx];
       var cell2 = row2[idx];
 
-      //print('Comparing $cell1 $cell2');
-
       if (cell1 == cell2) {
-        //print('Go next');
         continue;
       }
-
       if (cell1 > cell2) {
-        //print('Ret ${colIndex1based.sign}');
         return colIndex1based.sign;
       }
       return -colIndex1based.sign;
@@ -66,46 +259,11 @@ void sortFull(List<List<dynamic>> rows, List<int> columnIndexes) {
   rows.addAll(allExceptHeader);
 }
 
-Align guessAlignCell(dynamic cell) {
-  return (cell is num) ? Align.right : Align.left;
-}
-
-Align guessAlignColumn(Iterable<dynamic> allCellsInColumn) {
-  Align? result;
-
-  for (final cell in allCellsInColumn) {
-    if (result == null) {
-      result = guessAlignCell(cell);
-    } else if (guessAlignCell(cell) != result) {
-      return Align.left; // default
-    }
-  }
-
-  result ??= Align.left;
-  return result;
-}
-
 Iterable<dynamic> enumerateColumn(List<List<dynamic>> rows, int colIndex) sync* {
   for (final row in rows) {
     yield row[colIndex];
   }
 }
-
-List<List<dynamic>> copyRows(List<List<dynamic>> rows) {
-
-  return rows.map((e) => e.toList()).toList();
-
-  // final result = <List<dynamic>>[];
-  // for (final row in rows) {
-  //   result.add(row.toList());
-  // }
-  // return result;
-}
-
-// enum Order {
-//   ascending,
-//   descending
-// }
 
 class Sort {
   Sort(this.column, [this.ascending = true]);
@@ -114,99 +272,47 @@ class Sort {
   bool ascending;
 }
 
-String generateBar(int width, Align? align) {
+String generateBar(int width, Side? align) {
   switch (align) {
     case null:
-    case Align.left:
+    case Side.left:
       return '-' * (width + 2);
-    case Align.right:
+    case Side.right:
       return '-' * (width + 1) + ':';
-    case Align.center:
+    case Side.center:
       return ':' + '-' * width + ':';
   }
 }
 
 /// @param sorting Determines the sorting order.
 String tabular(List<List<dynamic>> rows,
-    {List<Align>? headerAlign, List<Align>? rowAlign, List<Sort>? sort, markdownAlign = false}) {
-  final headerRow = rows[0].map((e) => cellToString(e)).toList(growable: false);
-
-  rows = copyRows(rows);
-
-  int toColIndex(dynamic col) {
-    if (col is int) {
-      return col;
-    }
-    final idx = headerRow.indexOf(col.toString());
-    if (idx < 0) {
-      throw ArgumentError.value(col, 'col', 'Column not found.');
-    }
-    return idx;
-  }
+    {List<Side>? headerAlign, List<Side>? rowAlign, List<Sort>? sort, markdownAlign = false}) {
+  final matrix = CellsMatrix(rows);
 
   if (sort != null) {
-    final headerRow = rows[0].map((e) => cellToString(e)).toList(growable: false);
     final sortingIndexes = <int>[]; // 1-based
     for (var item in sort) {
-      var idx = toColIndex(item.column) + 1;
-      //var srt = pair[1] as Order;
-
+      var idx = matrix.columnIndex(item.column) + 1;
       if (!item.ascending) {
         idx = -idx;
       }
       sortingIndexes.add(idx);
-      // if (item is int) {
-      //   if (item==0) {
-      //     throw ArgumentError.value(sorting, 'Indices are counted from one.');
-      //   }
-      //   sortingIndexes.add(item);
-      // } else {
-      //   final itemStr = item.toString();
-      //   final idx = headerRow.indexOf(itemStr);
-      //   if (idx < 0) {
-      //     throw ArgumentError.value(sorting, 'Column "$itemStr" not found.');
-      //   }
-      //   sortingIndexes.add(idx+1);
-      // }
     }
-    sortFull(rows, sortingIndexes);
-  }
 
-  //  sortFull(rows, sorting);
-  //}
-
-  final columnsCount = rows.map((r) => r.length).reduce(max);
-
-  for (final row in rows) {
-    while (row.length < columnsCount) {
-      row.add('');
-    }
-  }
-
-  rowAlign ??= <Align>[];
-  for (var iCol = 0; iCol < columnsCount; iCol++) {
-    if (rowAlign.length <= iCol) {
-      rowAlign.add(guessAlignColumn(enumerateColumn(rows, iCol).skip(1)));
-      assert(!(rowAlign.length <= iCol));
-    }
-  }
-  //rowAlign = <Align>[];
-
-  final columnsWidths = <int>[];
-  for (var iCol = 0; iCol < columnsCount; iCol++) {
-    columnsWidths
-        .add(rows.map((row) => row[iCol]).map((cell) => cellToString(cell).length).reduce(max));
+    matrix.sortBy(sortingIndexes);
   }
 
   var bar = List.generate(
-          columnsCount, (i) => generateBar(columnsWidths[i], markdownAlign ? rowAlign![i] : null))
+          matrix.columnsCount,
+          (i) => generateBar(
+              matrix.columns[i].textWidth, markdownAlign ? matrix.columns[i].guessAlign() : null))
       .join('|');
   bar = '|' + bar + '|';
 
   final formattedRows = <String>[];
 
   var iRow = -1;
-  for (var row in rows) {
+  for (var row in matrix.rows) {
     iRow++;
 
     if (iRow == 1) {
@@ -220,20 +326,8 @@ String tabular(List<List<dynamic>> rows,
       formatted += ' ';
       iCol++;
 
-      var align = (cell is num) ? Align.right : Align.left;
-      if (iRow == 0) {
-        // header
-        if (headerAlign != null && headerAlign.length > iCol) {
-          align = headerAlign[iCol];
-        }
-      } else {
-        // not header
-        if (rowAlign != null && rowAlign.length > iCol) {
-          align = rowAlign[iCol];
-        }
-      }
-
-      formatted += alignCell(cellToString(cell), columnsWidths[iCol], align);
+      formatted += alignCell(
+          cell.toString(), matrix.columns[iCol].textWidth, matrix.columns[iCol].guessAlign());
       formatted += ' |';
     }
     formattedRows.add(formatted);

@@ -10,9 +10,6 @@ import 'data.dart';
 
 
 void main() {
-
-
-
   test('strings', () {
     var t = tabular([
       ['Winter', 'Spring', 'Summer', 'Autumn'],
@@ -21,14 +18,43 @@ void main() {
       ['February', 'May', 'August', 'November']
     ]);
 
+    //print(t);
+
     expect(t, mini(''' 
           | Winter   | Spring | Summer | Autumn    |
           |----------|--------|--------|-----------|
           | December | March  | June   | September |
           | January  | April  | July   | October   |
           | February | May    | August | November  |
+          
+          
         '''));
   });
+
+  test('digits auto right', () {
+    var t = tabular([
+      ['First', 'Second', 'Third'],
+      [85, 2, 27],
+      [1414, 2348, 12037],
+      [114, 248, 037],
+      [1, 2, 3],
+    ]);
+
+    //print(t);
+
+    expect(t, mini(''' 
+          | First | Second | Third |
+          |-------|--------|-------|
+          |    85 |      2 |    27 |
+          |  1414 |   2348 | 12037 |
+          |   114 |    248 |    37 |
+          |     1 |      2 |     3 |
+        '''));
+  });
+
+
+
+
 
   test('markdown align by guess', () {
     var t = tabular(numbers, markdownAlign: true);
@@ -45,23 +71,31 @@ void main() {
         '''));
   });
 
-  test('digits', () {
+
+
+  test('mixed', () {
     var t = tabular([
       ['First', 'Second', 'Third'],
       [85, 2, 27],
-      [1414, 2348, 12037],
+      [1414, '348', null],
+      [666],
+      [null, 777],
       [114, 248, 037],
-      [1, 2, 3],
+      ['', 2, null],
+
     ]);
 
-    expect(t, mini(''' 
-          | First | Second | Third |
-          |-------|--------|-------|
-          |    85 |      2 |    27 |
-          |  1414 |   2348 | 12037 |
-          |   114 |    248 |    37 |
-          |     1 |      2 |     3 |
+    //print(t);
+
+    expect(t, mini('''
+      | First | Second | Third |
+      |-------|--------|-------|
+      |    85 |      2 |    27 |
+      |  1414 |    348 |       |
+      |   666 |        |       |
+      |       |    777 |       |
+      |   114 |    248 |    37 |
+      |       |      2 |       |
         '''));
   });
-
- }
+}
