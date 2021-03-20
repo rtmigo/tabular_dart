@@ -8,10 +8,10 @@ Converts Dart lists to a Markdown table.
 
 ``` dart
 var data = [
- ['Winter', 'Spring', 'Summer', 'Autumn'],
- ['December', 'March', 'June', 'September'],
- ['January', 'April', 'July', 'October'],
- ['February', 'May', 'August', 'November']];
+    ['Winter', 'Spring', 'Summer', 'Autumn'],
+    ['December', 'March', 'June', 'September'],
+    ['January', 'April', 'July', 'October'],
+    ['February', 'May', 'August', 'November']];
 
 print(tabular(data));
 ```
