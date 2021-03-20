@@ -47,6 +47,8 @@ print(tabular(data));
 | Europe        | Sweden    |  221800 |   10099265 |       45.5 |
 ```
 
+# Sorting
+
 ### Sorting ascending
 
 ``` dart
