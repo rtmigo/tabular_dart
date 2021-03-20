@@ -112,7 +112,7 @@ print(tabular(data, sort: [Sort('Per island', false)]));
 
 ### Sorting by two columns
 ``` dart
-print(tabular(data, sort: [Sort('Continent'), Sort('Country')]));
+print(tabular(data, sort: [Sort(0), Sort(1)]));
 ```
 
 ``` test
