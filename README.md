@@ -60,7 +60,7 @@ by column name:
 ``` dart
 print(tabular(data, sort: [Sort('Per island')]));
 ```
-or by column index:
+or the same by column index:
 ``` dart
 print(tabular(data, sort: [Sort(4)]));
 ```
