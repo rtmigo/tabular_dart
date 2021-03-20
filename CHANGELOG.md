@@ -1,4 +1,4 @@
-# 0.3-beta
+# 0.3.0-beta
 
 - Documentation additions
 
