@@ -59,7 +59,7 @@ or by column index:
 ``` dart
 print(tabular(data, sort: [Sort(4)]));
 ```
-
+output:
 ``` text
 | Continent     | Country   | Islands | Population | Per island |
 |---------------|-----------|---------|------------|------------|
