@@ -7,12 +7,13 @@
 Converts Dart lists to a Markdown table.
 
 ``` dart
-print(tabular([
-  ['Winter', 'Spring', 'Summer', 'Autumn'],
-  ['December', 'March', 'June', 'September'],
-  ['January', 'April', 'July', 'October'],
-  ['February', 'May', 'August', 'November']
-]));
+var data = [
+ ['Winter', 'Spring', 'Summer', 'Autumn'],
+ ['December', 'March', 'June', 'September'],
+ ['January', 'April', 'July', 'October'],
+ ['February', 'May', 'August', 'November']];
+
+print(tabular(data));
 ```
 ``` text
 | Winter   | Spring | Summer | Autumn    |
