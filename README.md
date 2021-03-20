@@ -15,7 +15,6 @@ print(tabular([
 ]));
 ```
 ```
-
 | Winter   | Spring | Summer | Autumn    |
 |----------|--------|--------|-----------|
 | December | March  | June   | September |
