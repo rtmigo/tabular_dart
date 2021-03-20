@@ -41,27 +41,30 @@ class Sort {
   final bool emptyFirst;
 }
 
-String alignText(String text, int targetWidth, Side align) {
-  switch (align) {
-    case Side.start:
-      return text.padRight(targetWidth);
-    case Side.end:
-      return text.padLeft(targetWidth);
-    case Side.center:
-      return alignTextCenter(text, targetWidth);
+class Aligner {
+
+  String alignText(String text, int targetWidth, Side align) {
+    switch (align) {
+      case Side.start:
+        return text.padRight(targetWidth);
+      case Side.end:
+        return text.padLeft(targetWidth);
+      case Side.center:
+        return alignTextCenter(text, targetWidth);
+    }
   }
-}
 
-bool centerOdd = true;
+  bool centerOdd = true; // that's why we need the object
 
-String alignTextCenter(String text, int targetWidth) {
-  final halfD = (targetWidth - text.length)/2;
+  String alignTextCenter(String text, int targetWidth) {
+    final halfD = (targetWidth - text.length) / 2;
 
-  final half = centerOdd ? halfD.ceil() : halfD.floor(); //>> 1;
-  centerOdd = !centerOdd;
-  text = text.padLeft(text.length + half);
-  text = text.padRight(targetWidth);
-  return text;
+    final half = centerOdd ? halfD.ceil() : halfD.floor(); //>> 1;
+    centerOdd = !centerOdd;
+    text = text.padLeft(text.length + half);
+    text = text.padRight(targetWidth);
+    return text;
+  }
 }
 
 /// Specifies how to convert the source value of the cell to a [String].
@@ -435,6 +438,8 @@ String tabular(List<List<dynamic>> rows,
 
   final formattedRows = <String>[];
 
+  final aligner = Aligner();
+
   var iRow = -1;
   for (var row in matrix.rows) {
     iRow++;
@@ -458,7 +463,7 @@ String tabular(List<List<dynamic>> rows,
       }
       iCol++;
       formatted +=
-          alignText(cell.toFinalString(), matrix.columns[iCol].textWidth, colToAlign[iCol]);
+          aligner.alignText(cell.toFinalString(), matrix.columns[iCol].textWidth, colToAlign[iCol]);
     }
 
     if (outerBorder) {
