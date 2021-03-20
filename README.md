@@ -78,7 +78,7 @@ print(tabular(data, markdownAlign: true));
 ### Sort alphabetically by column 0
 
 ``` dart
-print(tabular(data, sort: [Sort(0)]));
+print(tabular(data, sort: [Sort(0)])); // 0 is 'Season'
 ```
 
 ``` text
