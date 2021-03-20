@@ -32,6 +32,7 @@ or [pretty_table](https://pypi.org/project/prettytable/). But the Tabular is mad
 
   print(tabular(data));
 ```
+
 ``` text
 | Season |  # | Name      | Days |   Sun |
 |--------|----|-----------|------|-------|
