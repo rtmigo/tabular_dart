@@ -14,6 +14,10 @@ GitHub understands.
 The library is inspired by python's [tabulate](https://pypi.org/project/tabulate/) 
 and [pretty_table](https://pypi.org/project/prettytable/). 
 
+** At the time of writing, [pub.dev](https://pub.dev/packages/tabular) does not display the program output 
+correctly. See the [Tabular description on GitHub](https://github.com/rtmigo/tabular#readme) 
+for correct examples. ** 
+
 ----
 
 
