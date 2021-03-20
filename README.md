@@ -47,7 +47,7 @@ print(tabular(data));
 | Europe        | Sweden    |  221800 |   10099265 |       45.5 |
 ```
 
-### Sorting
+### Sorting ascending
 
 ``` dart
 print(tabular(data, sort: [Sort('Per island')]));
@@ -62,4 +62,21 @@ print(tabular(data, sort: [Sort('Per island')]));
 | North America | Canada    |   52455 |   37742154 |      719.5 |
 | Asia          | Indonesia |   17508 |  273523615 |    15622.8 |
 | Asia          | Japan     |    6853 |  126476461 |    18455.6 |
+```
+
+### Sorting descending
+
+``` dart
+print(tabular(data, sort: [Sort('Per island', false)]));
+```
+
+``` text
+| Continent     | Country   | Islands | Population | Per island |
+|---------------|-----------|---------|------------|------------|
+| Asia          | Japan     |    6853 |  126476461 |    18455.6 |
+| Asia          | Indonesia |   17508 |  273523615 |    15622.8 |
+| North America | Canada    |   52455 |   37742154 |      719.5 |
+| Europe        | Norway    |   55000 |    5421241 |       98.6 |
+| Europe        | Sweden    |  221800 |   10099265 |       45.5 |
+| Europe        | Finland   |  188000 |    5540720 |       29.5 |
 ```
