@@ -51,8 +51,13 @@ print(tabular(data));
 
 ### Sorting ascending
 
+by column name:
 ``` dart
 print(tabular(data, sort: [Sort('Per island')]));
+```
+or by column index:
+``` dart
+print(tabular(data, sort: [Sort(4)]));
 ```
 
 ``` text
