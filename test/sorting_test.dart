@@ -8,6 +8,7 @@ import 'common.dart';
 
 void main() {
   group('sorting numbers', () {
+
     test('by single index', () {
       final t = tabular(numbers, sort: [Sort(1)], outerBorder: true);
       //print(t);
@@ -21,6 +22,21 @@ void main() {
         |   512 |   2348 | 12037 |
         '''));
     });
+
+    test('formatting does not change sorting', () {
+      final t = tabular(numbers, sort: [Sort(1)], format: {1: (value)=>value==10 ? 'TEN' : value.toString()});
+      //print(t);
+      expect(t, testTrim(''' 
+        First | Second | Third
+        ------|--------|------
+          512 |     -1 |    37
+           85 |    TEN |    27
+            5 |    TEN |     3
+            1 |    TEN |   100
+          512 |   2348 | 12037
+        '''));
+    });
+
 
     test('by indices [1, 0] [asc, asc]', () {
       final t = tabular(numbers, sort: [Sort(1), Sort(0)], outerBorder: true);
