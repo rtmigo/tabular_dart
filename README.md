@@ -8,7 +8,7 @@
 
 It is similar to python's [tabulate](https://pypi.org/project/tabulate/) 
 or [pretty_table](https://pypi.org/project/prettytable/). But the Tabular 
-is designed to create tables in the Markdown format that Github understands.
+is specifically designed to create tables in the Markdown format that Github understands.
 
 ----
 
