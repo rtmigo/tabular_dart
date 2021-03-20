@@ -42,12 +42,12 @@ String testTrim(String s) {
   final lines = s.split('\n');
 
   // removing empty lines at the beginning of the list
-  while (lines.isNotEmpty && lines.first.isEmpty) {
+  while (lines.isNotEmpty && lines.first.trim().isEmpty) {
     lines.removeAt(0);
   }
 
   // removing empty lines at the end of the list
-  while (lines.isNotEmpty && lines.last.isEmpty) {
+  while (lines.isNotEmpty && lines.last.trim().isEmpty) {
     lines.removeLast();
   }
 
