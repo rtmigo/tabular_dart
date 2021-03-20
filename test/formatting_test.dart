@@ -53,6 +53,28 @@ void main() {
         '''.trimRight()));
   });
 
+  test('formatter', () {
+
+    var t = tabular([
+      ['Winter',    'Spring', 'Summer', 'Autumn'],
+      ['December',  'March',  'June',   'September'],
+      ['January',   'April',  'July',   'October'],
+      ['February',  'May',    'August', 'November']
+    ],
+      format: {'Spring': (val)=>(val as String).toUpperCase()},
+    );
+
+    //print(t);
+
+    expect(t.trimRight(), testTrim(''' 
+      Winter   | Spring | Summer | Autumn   
+      ---------|--------|--------|----------
+      December | MARCH  | June   | September
+      January  | APRIL  | July   | October  
+      February | MAY    | August | November
+        '''.trimRight()));
+  });
+
 
 
   test('digits auto right', () {

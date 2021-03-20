@@ -133,6 +133,34 @@ Autumn | 11 | November  |   30 | 2302
 Winter | 12 | December  |   31 | 258
 ```
 
+### Custom column formatting
+
+``` dart
+tabular(data, 
+    format: {
+        'Name': (value) => value.toUpperCase(), 
+        'Sun': (value) => '+ '+value.toString() })
+```
+
+``` text
+Season |  # | Name      | Days |     Sun
+-------|----|-----------|------|--------
+Winter |  1 | JANUARY   |   31 |    + 94
+Winter |  2 | FEBRUARY  |   28 |   + 123
+Spring |  3 | MARCH     |   31 |    + 42
+Spring |  4 | APRIL     |   30 |   + 243
+Spring |  5 | MAY       |   31 |  + 5523
+Summer |  6 | JUNE      |   30 | + 11251
+Summer |  7 | JULY      |   31 | + 17451
+Summer |  8 | AUGUST    |   31 | + 18707
+Autumn |  9 | SEPTEMBER |   30 |  + 7025
+Autumn | 10 | OCTOBER   |   31 |  + 5041
+Autumn | 11 | NOVEMBER  |   30 |  + 2302
+Winter | 12 | DECEMBER  |   31 |   + 258
+```
+
+
+
 # Sorting
 
 ### Sort alphabetically by column 0

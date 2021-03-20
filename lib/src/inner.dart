@@ -50,11 +50,14 @@ String alignTextCenter(String text, int targetWidth) {
   return text;
 }
 
+typedef FormatCell = String Function(dynamic value);
+
 class Cell implements Comparable<Cell> {
   Cell(this.rawCell, {this.nullReplacement = ''});
 
   final dynamic rawCell;
   final String nullReplacement;
+  FormatCell? format;
 
   @override
   String toString() {
@@ -63,6 +66,14 @@ class Cell implements Comparable<Cell> {
     } else {
       return rawCell.toString();
     }
+  }
+
+  String toFinalString() {
+    // todo cache
+    if (this.format!=null) {
+      return this.format!(this.rawCell);
+    }
+    return this.toString();
   }
 
   bool get isEmpty {
@@ -123,7 +134,7 @@ class CellsColumn {
 
   int get textWidth {
     // todo cache
-    return this.cells.map<int>((cell) => cell.toString().length).reduce(max);
+    return this.cells.map<int>((cell) => cell.toFinalString().length).reduce(max);
   }
 
   Side guessAlign() {
@@ -143,7 +154,7 @@ class CellsColumn {
 }
 
 class CellsMatrix {
-  CellsMatrix(List<List<dynamic>> rawRows) {
+  CellsMatrix(List<List<dynamic>> rawRows, Map<dynamic,FormatCell>? format) {
     if (rawRows.length <= 1) {
       throw ArgumentError.value(rawRows.length, 'rawRows.length',
           'Must contain at least two items: the header and the first row.');
@@ -156,9 +167,20 @@ class CellsMatrix {
       throw ArgumentError('rawRows contains zero columns.');
     }
 
+    //this.header =
+
+    // Map<int,FormatCell> columnFormats;
+    // if (format!=null) {
+    //   columnFormats = format.map((key, value) => MapEntry(this.columnIndex(key), value));
+    // } else {
+    //   columnFormats = <int,FormatCell>{};
+    // }
+
+
     // creating [rows] field
     for (final srcRow in rawRows) {
       // copying raw cell data into list on Cells
+
       final newRow = srcRow.map((raw) => Cell(raw)).toList();
       // adding empty cells to the end of the row, if needed
       while (newRow.length < columnsCount) {
@@ -166,9 +188,27 @@ class CellsMatrix {
       }
       this.rows.add(newRow);
     }
+
+
+
+
+
     // creating the columns list
     for (var i = 0; i < columnsCount; ++i) {
+      //if (format!=null && format[])
       this.columns.add(CellsColumn(this, i));
+    }
+
+    // now, with [rows] initialized we have [header],
+    // so we can locate columns by their dynamic identifiers.
+    // We also have now have [columns]
+    if (format!=null) {
+      for (final me in format.entries) {
+        final iCol = this.columnIndex(me.key);
+        for (final cell in this.columns[iCol].cells.skip(1)) {
+          cell.format = me.value;
+        }
+      }
     }
 
     assert(this.rows.isNotEmpty);
@@ -325,9 +365,19 @@ extension ListExt<T> on List<T> {
   }
 }
 
+// extension MapExt<K,V> on Map<K,V> {
+//   V tryGet(K index, V empty) {
+//     if (this.containsKey(index)) {
+//       return this[index];
+//     }
+//
+//     return (this.length>index) ? this[index] : empty;
+//   }
+// }
+
 /// Transforms a map with optional alignment rules to a list will all elements set.
 /// @returns A `result` list such as `result[columnIndex]` is the alignment for the column. 
-List<Side> createColToAlign(CellsMatrix matrix, Map<dynamic,Side>? align) {
+List<Side> createColToAlign<T>(CellsMatrix matrix, Map<dynamic,Side>? align) {
 
   List<Side?> colToAlignNullable = <Side?>[];
   if (align != null) {
@@ -351,11 +401,12 @@ List<Side> createColToAlign(CellsMatrix matrix, Map<dynamic,Side>? align) {
 String tabular(List<List<dynamic>> rows,
     {List<Side>? headerAlign,
     List<Side>? rowAlign,
-      Map<dynamic,Side>? align,
+    Map<dynamic,Side>? align,
+    Map<dynamic,FormatCell>? format,
     List<Sort>? sort,
     markdownAlign = false,
     outerBorder = false}) {
-  final matrix = CellsMatrix(rows);
+  final matrix = CellsMatrix(rows, format);
 
   if (sort != null) {
     matrix.sortBy(sort);
@@ -420,7 +471,7 @@ String tabular(List<List<dynamic>> rows,
       }
       iCol++;
       formatted += alignText(
-          cell.toString(), matrix.columns[iCol].textWidth, colToAlign[iCol]);
+          cell.toFinalString(), matrix.columns[iCol].textWidth, colToAlign[iCol]);
     }
 
     if (outerBorder) {

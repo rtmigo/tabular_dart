@@ -31,6 +31,9 @@ void main() {
   print(title('WITH MODIFIED ALIGNMENT'));
   print(tabular(data, align: {'Name': Side.center, 'Sun': Side.start}));
 
+  print(title('WITH CUSTOM FORMATTING'));
+  print(tabular(data, format: {'Name': (value)=>value.toUpperCase(), 'Sun': (value)=>'+ '+value.toString()}));
+
 
   print(title('SORTED BY FIRST COLUMN'));
   print(tabular(data, sort: [Sort(0)]));
