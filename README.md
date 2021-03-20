@@ -22,6 +22,11 @@ print(tabular([
 | February | May    | August | November  |
 ```
 
+# Formatting
+
+The columns with numbers are automatically aligned to the right, 
+the rest to the left
+
 ``` dart
 final data = [
     ['Continent', 'Country', 'Islands', 'Population', 'Per island'],
