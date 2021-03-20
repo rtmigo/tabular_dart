@@ -4,7 +4,7 @@
 
 # [tabular](https://github.com/rtmigo/tabular)
 
-Converts Dart lists to a Markdown table.
+`tabular` converts a Dart list to a Markdown table.
 
 ``` dart
 var data = [
