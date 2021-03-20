@@ -14,7 +14,9 @@ is specifically designed to create tables in the Markdown format that Github und
 
 
 ``` dart
-  var data = [
+import 'package:tabular/tabular.dart';
+
+var data = [
     ['Season', '#', 'Name', 'Days', 'Sun'],
     ['Winter', 1, 'January', 31, 94],
     ['Winter', 2, 'February', 28, 123],
@@ -28,9 +30,9 @@ is specifically designed to create tables in the Markdown format that Github und
     ['Autumn', 10, 'October', 31, 5041],
     ['Autumn', 11, 'November', 30, 2302],
     ['Winter', 12, 'December', 31, 258],
-  ];
+];
 
-  print(tabular(data));
+print(tabular(data));
 ```
 
 ``` text
