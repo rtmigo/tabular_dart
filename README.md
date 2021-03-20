@@ -12,7 +12,6 @@ is designed to create tables in the Markdown format that Github understands.
 
 ----
 
- 
 
 ``` dart
   var data = [
@@ -51,7 +50,7 @@ is designed to create tables in the Markdown format that Github understands.
 | Winter | 12 | December  |   31 |   258 |
 ```
 
-#### Add markdown ':' alignment marks
+### Add markdown ':' alignment marks
 
 ``` dart
 print(tabular(data, markdownAlign: true));
@@ -74,7 +73,7 @@ print(tabular(data, markdownAlign: true));
 | Winter | 12 | December  |   31 |   258 |
 ```
 
-#### Sort alphabetically by column 0
+### Sort alphabetically by column 0
 
 ``` dart
 print(tabular(data, sort: [Sort(0)]));
@@ -96,7 +95,7 @@ print(tabular(data, sort: [Sort(0)]));
 | Winter |  2 | February  |   28 |   123 |
 | Winter | 12 | December  |   31 |   258 |
 ```
-#### Sort by 'Days' descending, and then by 'Sun' ascending
+### Sort by 'Days' descending, and then by 'Sun' ascending
 
 ``` dart
 print(tabular(data, sort: [Sort('Days', false), Sort('Sun')]));
