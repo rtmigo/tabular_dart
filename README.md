@@ -6,6 +6,8 @@
 
 `tabular` converts a Dart list to a Markdown table.
 
+------
+
 ``` dart
 var data = [
     ['Winter', 'Spring', 'Summer', 'Autumn'],
