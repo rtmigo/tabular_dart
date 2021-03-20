@@ -71,6 +71,14 @@ print(tabular(data, markdownAlign: true));
 | Winter | 12 | December  |   31 |   258 |
 ```
 
+Sort alphabetically by column 0
+``` dart
+print(tabular(data, sort: [Sort(0)]));
+```
+
+
+print(tabular(data, sort: [Sort(0)]));
+
 # Formatting
 
 The columns with numbers are automatically aligned to the right, 
