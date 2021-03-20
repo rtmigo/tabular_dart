@@ -1,7 +1,6 @@
 import 'package:tabular/src/inner.dart';
 
 void main() {
-
   final data = [
     ['Continent', 'Country', 'Islands', 'Population', 'Per island'],
     ['Europe', 'Norway', 55000, 5421241, 98.6],
@@ -13,4 +12,6 @@ void main() {
   ];
 
   print(tabular(data));
+  print('');
+  print(tabular(data, sort: [Sort('Per island')]));
 }
