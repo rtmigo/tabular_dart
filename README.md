@@ -2,12 +2,12 @@
 ![Generic badge](https://img.shields.io/badge/tested_on-VM_|_JS-blue.svg)
 [![Actions Status](https://github.com/rtmigo/tabular/workflows/unittest/badge.svg?branch=master)](https://github.com/rtmigo/tabular/actions)
 
-# [tabular](https://github.com/rtmigo/tabular)
+# [Tabular](https://github.com/rtmigo/tabular)
 
 `tabular` converts a Dart list to a Markdown table.
 
 It is similar to python's [tabulate](https://pypi.org/project/tabulate/) 
-or [pretty_table](https://pypi.org/project/prettytable/). But the library is made directly to create tables in the Markdown format that Github understands.
+or [pretty_table](https://pypi.org/project/prettytable/). But the Tabular is made directly to create tables in the Markdown format that Github understands.
 
 ----
 
