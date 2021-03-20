@@ -7,7 +7,7 @@
 `tabular` converts a Dart list to a Markdown table.
 
 It is inspired by python's [tabulate](https://pypi.org/project/tabulate/) 
-or [pretty_table](https://pypi.org/project/prettytable/). But the Tabular 
+and [pretty_table](https://pypi.org/project/prettytable/). But the Tabular 
 is specifically designed to create tables in the Markdown format that Github understands.
 
 ----
