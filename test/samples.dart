@@ -33,7 +33,7 @@ void main() {
   print('');
   print(tabular(data, sort: [Sort(0)]));
   print('');
-  print(tabular(data, sort: [Sort('Days', false), Sort('Name')]));
+  print(tabular(data, sort: [Sort('Days', false), Sort('Sun')]));
 
   // print('');
   //
