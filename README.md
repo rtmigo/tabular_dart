@@ -6,7 +6,7 @@
 
 `tabular` converts a Dart list to a Markdown table.
 
-------
+It is similar to python's [tabulate](https://pypi.org/project/tabulate/) or [pretty_table](https://pypi.org/project/prettytable/). 
 
 ``` dart
 var data = [
