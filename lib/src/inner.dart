@@ -5,13 +5,21 @@ import 'dart:math';
 
 import 'package:quiver/iterables.dart' show enumerate;
 
+/// Sets the cell alignment. In the case of horizontal alignment, [Side.start] means left,
+/// [Side.end] means right.
 enum Side { start, end, center }
 
 /// Describes the rules by which an individual column should be aligned.
 class Align {
   Align(this.column, this.side);
 
+  /// Identifies the column that we are sorting. This can be either [int],
+  /// which specifies the column index, or [String], which specifies
+  /// the column name.
   final dynamic column;
+
+  /// Specifies which way each column cell should be shifted after converting
+  /// the cell value to [String].
   final Side side;
 }
 
@@ -51,6 +59,7 @@ String alignTextCenter(String text, int targetWidth) {
   return text;
 }
 
+/// Specifies how to convert the source value of the cell to a [String].
 typedef FormatCell = String Function(dynamic value);
 
 class Cell implements Comparable<Cell> {
@@ -168,15 +177,6 @@ class CellsMatrix {
       throw ArgumentError('rawRows contains zero columns.');
     }
 
-    //this.header =
-
-    // Map<int,FormatCell> columnFormats;
-    // if (format!=null) {
-    //   columnFormats = format.map((key, value) => MapEntry(this.columnIndex(key), value));
-    // } else {
-    //   columnFormats = <int,FormatCell>{};
-    // }
-
     // creating [rows] field
     for (final srcRow in rawRows) {
       // copying raw cell data into list on Cells
@@ -191,7 +191,6 @@ class CellsMatrix {
 
     // creating the columns list
     for (var i = 0; i < columnsCount; ++i) {
-      //if (format!=null && format[])
       this.columns.add(CellsColumn(this, i));
     }
 
@@ -267,7 +266,6 @@ class CellsMatrix {
           final A_IS_SMALLER = rule.ascending ? -1 : 1;
           final A_IS_LARGER = rule.ascending ? 1 : -1;
 
-          //var idx = howWeSortThisColumn.column;
           var cell1 = rowA[columnIndex];
           var cell2 = rowB[columnIndex];
 
@@ -278,17 +276,14 @@ class CellsMatrix {
             return cell1.isEmpty ? (rule.emptyFirst ? -1 : 1) : (rule.emptyFirst ? 1 : -1);
           }
 
-          //print('Comparing $cell1 $cell2');
-
           int cmp = cell1.compareTo(cell2);
           if (cmp == 0) {
             continue;
           }
           if (cmp > 0) {
-            //print('Ret ${colIndex1based.sign}');
-            return A_IS_LARGER; //colIndex1based.sign;
+            return A_IS_LARGER;
           }
-          return A_IS_SMALLER; // -colIndex1based.sign;
+          return A_IS_SMALLER;
         }
         ;
         return 0;
@@ -323,19 +318,6 @@ void sortRo(List<List<dynamic>> rowsOnly, List<int> columnIndexes1based) {
     ;
     return 0;
   });
-}
-
-void sortFull(List<List<dynamic>> rows, List<int> columnIndexes) {
-  final allExceptHeader = rows.skip(1).toList();
-  sortRo(allExceptHeader, columnIndexes);
-  rows.length = 1;
-  rows.addAll(allExceptHeader);
-}
-
-Iterable<dynamic> enumerateColumn(List<List<dynamic>> rows, int colIndex) sync* {
-  for (final row in rows) {
-    yield row[colIndex];
-  }
 }
 
 extension ListExt<T> on List<T> {
@@ -376,7 +358,32 @@ List<Side> createColToAlign<T>(CellsMatrix matrix, Map<dynamic, Side>? align) {
   return colToAlign;
 }
 
-/// @param sort Determines the sorting order.
+/// Converts a set of cells defined by a two-dimensional list to a Markdown formatted ASCII table.
+///
+/// @param rows Source data for the table. The first of the lists will be the header, the
+/// others - ordinary lines. The values can be [String]s, [num]s, [null], or any objects. Either
+/// way, they end up being converted to strings.
+///
+/// @param align Specifies which way all cells in a particular column should be aligned. The keys
+/// of this [Map] can be of type [int] then they denote the index of the column, or of type
+/// [String] - then they denote the name of the column.
+///
+/// @param format Specifies how to convert each cell of a particular column to a row.
+/// This conversion occurs after sorting, but before alignment. The keys of this [Map] can be
+/// of type [int] then they denote the index of the column, or of type [String] - then they
+/// denote the name of the column.
+///
+/// @param sort Determines the sorting order. Sorting can take place in several columns at once.
+/// Priority will be given to the ones at the beginning of the list.
+///
+/// @param markdownAlign Determines whether to add the ':' characters to the delimiter under
+/// the header. These symbols tell services like GitHub which way to align the columns after
+/// converting the table to HTML.
+///
+/// @param outerBorder Determines whether to add vertical borders to the left and right sides
+/// of the table.
+///
+/// @returns A string containing a converted ASCII table that is ready for printing.
 String tabular(List<List<dynamic>> rows,
     {Map<dynamic, Side>? align,
     Map<dynamic, FormatCell>? format,
