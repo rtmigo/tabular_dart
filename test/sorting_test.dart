@@ -11,7 +11,7 @@ void main() {
     test('by single index', () {
       final t = tabular(numbers, sort: [Sort(1)], outerBorder: true);
       //print(t);
-      expect(t, trimLR(''' 
+      expect(t, testTrim(''' 
         | First | Second | Third |
         |-------|--------|-------|
         |   512 |     -1 |    37 |
@@ -25,7 +25,7 @@ void main() {
     test('by indices [1, 0] [asc, asc]', () {
       final t = tabular(numbers, sort: [Sort(1), Sort(0)], outerBorder: true);
       //print(t);
-      expect(t, trimLR('''
+      expect(t, testTrim('''
         | First | Second | Third |
         |-------|--------|-------|
         |   512 |     -1 |    37 |
@@ -39,7 +39,7 @@ void main() {
     test('by indices [0, 1] [asc, asc]', () {
       final t = tabular(numbers, sort: [Sort(0), Sort(1)], outerBorder: true);
       //print(t);
-      expect(t, trimLR('''
+      expect(t, testTrim('''
         | First | Second | Third |
         |-------|--------|-------|
         |     1 |     10 |   100 |
@@ -52,7 +52,7 @@ void main() {
 
     test('by two indices, asc-desc', () {
       final t = tabular(numbers, sort: [Sort(1, ascending: false), Sort(0)], outerBorder: true);
-      expect(t, trimLR('''
+      expect(t, testTrim('''
         | First | Second | Third |
         |-------|--------|-------|
         |   512 |   2348 | 12037 |
@@ -66,7 +66,7 @@ void main() {
     test('by name, asc-desc', () {
       final t = tabular(numbers, sort: [Sort('Second', ascending: false), Sort('First')], outerBorder: true);
       //print(t);
-      expect(t, trimLR('''
+      expect(t, testTrim('''
         | First | Second | Third |
         |-------|--------|-------|
         |   512 |   2348 | 12037 |
@@ -80,7 +80,7 @@ void main() {
     test('by name, asc-desc', () {
       final t = tabular(numbers, sort: [Sort('Second', ascending: false), Sort('First')], outerBorder: true);
       //print(t);
-      expect(t, trimLR('''
+      expect(t, testTrim('''
         | First | Second | Third |
         |-------|--------|-------|
         |   512 |   2348 | 12037 |

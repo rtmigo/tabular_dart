@@ -21,12 +21,12 @@ void main() {
 
     //print(t);
 
-    expect(trimR(t), trimR(''' 
-Winter   | Spring | Summer | Autumn   
----------|--------|--------|----------
-December | March  | June   | September
-January  | April  | July   | October  
-February | May    | August | November 
+    expect(t, testTrim(''' 
+      Winter   | Spring | Summer | Autumn   
+      ---------|--------|--------|----------
+      December | March  | June   | September
+      January  | April  | July   | October  
+      February | May    | August | November 
         '''));
   });
 
@@ -43,13 +43,13 @@ February | May    | August | November
 
     //    print(t);
 
-    expect(trimR(t), trimR(''' 
-First | Second | Third
-------|--------|------
-   85 |      2 |    27
- 1414 |   2348 | 12037
-  114 |    248 |    37
-  1.1 |    2.2 |   3.3
+    expect(t, testTrim(''' 
+      First | Second | Third
+      ------|--------|------
+         85 |      2 |    27
+       1414 |   2348 | 12037
+        114 |    248 |    37
+        1.1 |    2.2 |   3.3
         '''));
   });
 
@@ -61,7 +61,7 @@ First | Second | Third
     var t = tabular(numbers, markdownAlign: true);
     //print(t);
 
-    expect(trimR(t), trimR('''
+    expect(t, testTrim('''
 First | Second | Third
 -----:|-------:|-----:
    85 |     10 |    27
