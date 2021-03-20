@@ -7,6 +7,7 @@ import 'package:quiver/iterables.dart' show enumerate;
 
 enum Side { start, end, center }
 
+/// Describes the rules by which an individual column should be aligned.
 class Align {
   Align(this.column, this.side);
 
@@ -70,14 +71,14 @@ class Cell implements Comparable<Cell> {
 
   String toFinalString() {
     // todo cache
-    if (this.format!=null) {
+    if (this.format != null) {
       return this.format!(this.rawCell);
     }
     return this.toString();
   }
 
   bool get isEmpty {
-    return this.rawCell==null || this.rawCell.toString().isEmpty;
+    return this.rawCell == null || this.rawCell.toString().isEmpty;
   }
 
   bool isNumber() {
@@ -154,7 +155,7 @@ class CellsColumn {
 }
 
 class CellsMatrix {
-  CellsMatrix(List<List<dynamic>> rawRows, Map<dynamic,FormatCell>? format) {
+  CellsMatrix(List<List<dynamic>> rawRows, Map<dynamic, FormatCell>? format) {
     if (rawRows.length <= 1) {
       throw ArgumentError.value(rawRows.length, 'rawRows.length',
           'Must contain at least two items: the header and the first row.');
@@ -176,7 +177,6 @@ class CellsMatrix {
     //   columnFormats = <int,FormatCell>{};
     // }
 
-
     // creating [rows] field
     for (final srcRow in rawRows) {
       // copying raw cell data into list on Cells
@@ -189,10 +189,6 @@ class CellsMatrix {
       this.rows.add(newRow);
     }
 
-
-
-
-
     // creating the columns list
     for (var i = 0; i < columnsCount; ++i) {
       //if (format!=null && format[])
@@ -202,7 +198,7 @@ class CellsMatrix {
     // now, with [rows] initialized we have [header],
     // so we can locate columns by their dynamic identifiers.
     // We also have now have [columns]
-    if (format!=null) {
+    if (format != null) {
       for (final me in format.entries) {
         final iCol = this.columnIndex(me.key);
         for (final cell in this.columns[iCol].cells.skip(1)) {
@@ -240,14 +236,12 @@ class CellsMatrix {
   }
 
   void sortBy(List<Sort> rules) {
-
     if (this.columns.isEmpty) {
       return;
     }
-    
-    final indexedRules = rules.map(
-            (e) => MapEntry<int, Sort>(this.columnIndex(e.column), e)).toList();
 
+    final indexedRules =
+        rules.map((e) => MapEntry<int, Sort>(this.columnIndex(e.column), e)).toList();
 
     // replacing header with empty placeholder
     final temporaryRemovedHeader = this.rows[0];
@@ -267,10 +261,8 @@ class CellsMatrix {
         }
 
         for (final entry in indexedRules) {
-
           int columnIndex = entry.key;
           Sort rule = entry.value;
-
 
           final A_IS_SMALLER = rule.ascending ? -1 : 1;
           final A_IS_LARGER = rule.ascending ? 1 : -1;
@@ -280,12 +272,10 @@ class CellsMatrix {
           var cell2 = rowB[columnIndex];
 
           if (cell1.isEmpty || cell2.isEmpty) {
-            if (cell1.isEmpty&&cell2.isEmpty)  {
+            if (cell1.isEmpty && cell2.isEmpty) {
               continue;
             }
-            return cell1.isEmpty
-                   ? (rule.emptyFirst?-1:1)
-                   : (rule.emptyFirst?1:-1);
+            return cell1.isEmpty ? (rule.emptyFirst ? -1 : 1) : (rule.emptyFirst ? 1 : -1);
           }
 
           //print('Comparing $cell1 $cell2');
@@ -350,10 +340,10 @@ Iterable<dynamic> enumerateColumn(List<List<dynamic>> rows, int colIndex) sync* 
 
 extension ListExt<T> on List<T> {
   void setFilling(int index, T value, T empty) {
-    while (this.length<index) {
+    while (this.length < index) {
       this.add(empty);
     }
-    if (this.length>index) {
+    if (this.length > index) {
       this[index] = value;
     } else {
       this.add(value);
@@ -361,24 +351,13 @@ extension ListExt<T> on List<T> {
   }
 
   T tryGet(int index, T empty) {
-    return (this.length>index) ? this[index] : empty;
+    return (this.length > index) ? this[index] : empty;
   }
 }
 
-// extension MapExt<K,V> on Map<K,V> {
-//   V tryGet(K index, V empty) {
-//     if (this.containsKey(index)) {
-//       return this[index];
-//     }
-//
-//     return (this.length>index) ? this[index] : empty;
-//   }
-// }
-
 /// Transforms a map with optional alignment rules to a list will all elements set.
-/// @returns A `result` list such as `result[columnIndex]` is the alignment for the column. 
-List<Side> createColToAlign<T>(CellsMatrix matrix, Map<dynamic,Side>? align) {
-
+/// @returns A `result` list such as `result[columnIndex]` is the alignment for the column.
+List<Side> createColToAlign<T>(CellsMatrix matrix, Map<dynamic, Side>? align) {
   List<Side?> colToAlignNullable = <Side?>[];
   if (align != null) {
     for (final me in align.entries) {
@@ -399,10 +378,8 @@ List<Side> createColToAlign<T>(CellsMatrix matrix, Map<dynamic,Side>? align) {
 
 /// @param sort Determines the sorting order.
 String tabular(List<List<dynamic>> rows,
-    {List<Side>? headerAlign,
-    List<Side>? rowAlign,
-    Map<dynamic,Side>? align,
-    Map<dynamic,FormatCell>? format,
+    {Map<dynamic, Side>? align,
+    Map<dynamic, FormatCell>? format,
     List<Sort>? sort,
     markdownAlign = false,
     outerBorder = false}) {
@@ -413,8 +390,6 @@ String tabular(List<List<dynamic>> rows,
   }
 
   List<Side> colToAlign = createColToAlign(matrix, align);
-
-  //assert(c)
 
   String bar = '';
   if (outerBorder) {
@@ -470,8 +445,8 @@ String tabular(List<List<dynamic>> rows,
         formatted += ' | ';
       }
       iCol++;
-      formatted += alignText(
-          cell.toFinalString(), matrix.columns[iCol].textWidth, colToAlign[iCol]);
+      formatted +=
+          alignText(cell.toFinalString(), matrix.columns[iCol].textWidth, colToAlign[iCol]);
     }
 
     if (outerBorder) {
