@@ -2,4 +2,4 @@
 // SPDX-License-Identifier: MIT
 
 
-export 'src/inner.dart' show tabular, Sort, Side, FormatCell;
+export 'src/inner.dart' show tabular, Sort, Side, FormatCell, CompareCells;

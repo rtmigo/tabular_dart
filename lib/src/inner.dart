@@ -23,9 +23,11 @@ class Align {
   final Side side;
 }
 
+typedef CompareCells = int Function(dynamic a, dynamic b);
+
 /// Describes the rules by which an individual column should be sorted.
 class Sort {
-  Sort(this.column, {this.ascending = true, this.emptyFirst = false});
+  Sort(this.column, {this.ascending = true, this.emptyFirst = false, this.compare});
 
   /// Identifies the column that we are sorting. This can be either [int],
   /// which specifies the column index, or [String], which specifies
@@ -39,6 +41,8 @@ class Sort {
   /// Specifies whether the empty values should be placed at the beginning
   /// or at the end of the sorted column.
   final bool emptyFirst;
+
+  final CompareCells? compare;
 }
 
 class Aligner {
@@ -272,6 +276,11 @@ class CellsMatrix {
 
           var cell1 = rowA[columnIndex];
           var cell2 = rowB[columnIndex];
+
+          if (rule.compare!=null) {
+            int customComparison = rule.compare!(cell1.rawCell, cell2.rawCell);
+            return rule.ascending ? customComparison : -customComparison;
+          }
 
           if (cell1.isEmpty || cell2.isEmpty) {
             if (cell1.isEmpty && cell2.isEmpty) {

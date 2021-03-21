@@ -32,12 +32,15 @@ void main() {
   print(tabular(data, align: {'Name': Side.center, 'Sun': Side.start}));
 
   print(title('WITH CUSTOM FORMATTING'));
-  print(tabular(data, format: {'Name': (value)=>value.toUpperCase(), 'Sun': (value)=>'+ '+value.toString()}));
-
+  print(tabular(data,
+      format: {'Name': (value) => value.toUpperCase(), 'Sun': (value) => '+ ' + value.toString()}));
 
   print(title('SORTED BY FIRST COLUMN'));
   print(tabular(data, sort: [Sort(0)]));
 
   print(title('SORTED BY TWO COLUMNS "DAYS" AND "SUN"'));
   print(tabular(data, sort: [Sort('Days', ascending: false), Sort('Sun')]));
+
+  print(title('SORTED WITH A CUSTOM COMPARISON'));
+  print(tabular(data, sort: [Sort('Name', compare: (a, b) => a.length.compareTo(b.length))]));
 }

@@ -185,5 +185,54 @@ void main() {
         '''));
     });
 
+    test('custom comparison asc', () {
+      final t = tabular(sundata, sort: [
+        Sort(2, compare: (a,b)=>a.length.compareTo(b.length)),
+        Sort(0),
+      ]);
+      // print(t);
+      expect(t, testTrim(''' 
+        Season |  # | Name      | Days |   Sun
+        -------|----|-----------|------|------
+        Spring |  5 | May       |   31 |  5523
+        Summer |  6 | June      |   30 | 11251
+        Summer |  7 | July      |   31 | 17451
+        Spring |  3 | March     |   31 |    42
+        Spring |  4 | April     |   30 |   243
+        Summer |  8 | August    |   31 | 18707
+        Winter |  1 | January   |   31 |    94
+        Autumn | 10 | October   |   31 |  5041
+        Winter |  2 | February  |   28 |   123
+        Autumn | 11 | November  |   30 |  2302
+        Winter | 12 | December  |   31 |   258
+        Autumn |  9 | September |   30 |  7025
+        '''));
+    });
+
+    test('custom comparison desc', () {
+      final t = tabular(sundata, sort: [
+        Sort(2, compare: (a,b)=>a.length.compareTo(b.length), ascending: false),
+        Sort(0),
+      ]);
+      print(t);
+      expect(t, testTrim(''' 
+        Season |  # | Name      | Days |   Sun
+        -------|----|-----------|------|------
+        Autumn |  9 | September |   30 |  7025
+        Winter |  2 | February  |   28 |   123
+        Autumn | 11 | November  |   30 |  2302
+        Winter | 12 | December  |   31 |   258
+        Winter |  1 | January   |   31 |    94
+        Autumn | 10 | October   |   31 |  5041
+        Summer |  8 | August    |   31 | 18707
+        Spring |  3 | March     |   31 |    42
+        Spring |  4 | April     |   30 |   243
+        Summer |  6 | June      |   30 | 11251
+        Summer |  7 | July      |   31 | 17451
+        Spring |  5 | May       |   31 |  5523
+        '''));
+    });
+
+
   });
 }

@@ -205,3 +205,29 @@ Summer |  6 | June      |   30 | 11251
 Winter |  2 | February  |   28 |   123
 ```
 
+### Sort with custom comparison
+
+``` dart
+tabular(data, 
+    sort: [Sort('Name', compare: (a, b) => a.length.compareTo(b.length))])
+```
+
+``` text
+Season |  # | Name      | Days |   Sun
+-------|----|-----------|------|------
+Spring |  5 | May       |   31 |  5523
+Summer |  6 | June      |   30 | 11251
+Summer |  7 | July      |   31 | 17451
+Spring |  3 | March     |   31 |    42
+Spring |  4 | April     |   30 |   243
+Summer |  8 | August    |   31 | 18707
+Winter |  1 | January   |   31 |    94
+Autumn | 10 | October   |   31 |  5041
+Winter |  2 | February  |   28 |   123
+Autumn | 11 | November  |   30 |  2302
+Winter | 12 | December  |   31 |   258
+Autumn |  9 | September |   30 |  7025
+```
+
+### 
+
