@@ -214,7 +214,7 @@ void main() {
         Sort(2, compare: (a,b)=>a.length.compareTo(b.length), ascending: false),
         Sort(0),
       ]);
-      print(t);
+      //print(t);
       expect(t, testTrim(''' 
         Season |  # | Name      | Days |   Sun
         -------|----|-----------|------|------
