@@ -352,7 +352,7 @@ List<Side> createColToAlign<T>(CellsMatrix matrix, Map<dynamic, Side>? align) {
 /// Returns a string with the table that is ready for printing.
 ///
 /// [rows] is the source data for the table. The first of the lists will be the header, the
-/// others - ordinary lines. The values can be [String]s, [num]s, [null], or any objects. Either
+/// others - ordinary rows. The values can be [String]s, [num]s, [null], or any objects. Either
 /// way, they end up being converted to strings.
 ///
 /// [align] specifies which way all cells in a particular column should be aligned. The keys
