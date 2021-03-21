@@ -1,3 +1,7 @@
+# 0.4
+
+- Added the option of custom sorting with callbacks
+
 # 0.3.2-beta
 
 - Documentation additions
