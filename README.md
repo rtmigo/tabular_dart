@@ -207,6 +207,8 @@ Winter |  2 | February  |   28 |   123
 
 ### Sort with custom comparison
 
+Ordering the rows by the length of the month name.
+
 ``` dart
 tabular(data, 
     sort: [Sort('Name', compare: (a, b) => a.length.compareTo(b.length))])
