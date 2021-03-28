@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: (c) 2021 Art Galkin <github.com/rtmigo>
+// SPDX-FileCopyrightText: (c) 2021 Artsiom Galkin <github.com/rtmigo>
 // SPDX-License-Identifier: MIT
 
 import 'package:tabular/tabular.dart';
@@ -22,6 +22,28 @@ void main() {
         |   512 |   2348 | 12037 |
         '''));
     });
+
+    test('mixed types', () {
+      final data = [['First', 'Second', 'Third'],
+        [85, 10, 27],
+        [512, 2348, null],
+        [null, 10, 3],
+        [511.0, -1, null],
+        [1.0, 10, 100]];
+      final t = tabular(data, sort: [Sort(0)], outerBorder: true);
+      print(t);
+      expect(t, testTrim(''' 
+        | First | Second | Third |
+        |-------|--------|-------|
+        |   1.0 |     10 |   100 |
+        |    85 |     10 |    27 |
+        | 511.0 |     -1 |       |
+        |   512 |   2348 |       |
+        |       |     10 |     3 |
+        '''));
+    });
+
+
 
     test('formatting does not change sorting', () {
       final t = tabular(numbers, sort: [Sort(1)], format: {1: (value)=>value==10 ? 'TEN' : value.toString()});

@@ -1,4 +1,4 @@
-# 0.4.1
+# 0.4.1+1
 
 - Added the option of custom sorting with callbacks
 
