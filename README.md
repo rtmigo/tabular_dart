@@ -125,8 +125,8 @@ tabular(data, border: Border.vertical);
 | Winter | 12 | December  |   31 |   258 |
 ```
 
-Keep in mind that only vertical borders are part of Markdown. You can add 
-horizontal, but then GitHub will not see it as part of the table.
+Adding horizontal borders is also possible, but it can make the table not 
+conform to the Markdown standard.
 
 ## Switch border style
 
@@ -180,7 +180,8 @@ Autumn | 11 | November  |   30 |  2302
 Winter | 12 | December  |   31 |   258
 ```
 
-Keep in mind that additional dividers may not be recognized as a correct Markdown.
+Please be aware that extra delimiters can make the table not conform to the 
+Markdown standard.
 
 
 ## Custom column formatting
