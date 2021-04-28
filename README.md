@@ -1,6 +1,6 @@
 # [Tabular](https://github.com/rtmigo/tabular_dart#tabular)
 
-Dart library for easily displaying tabular data in a visually appealing 
+Dart library for displaying tabular data in a visually appealing 
 ASCII table format.
 
 Tabular is specifically designed to create tables in the Markdown format that 

@@ -394,21 +394,22 @@ List<Side> createColToAlign<T>(CellsMatrix matrix, Map<dynamic, Side>? align) {
 ///
 /// [rowDividers] contains the indices of the [rows], which must be preceded by a horizontal
 /// divider. By default, there is only index 1, which corresponds to the divider between
-/// the header and the body of the table.
+/// the header and the body of the table. `rowDividers: null` will cause dividers to be added
+/// between all rows.
 String tabular(
     List<List<dynamic>> rows,
-    {Map<dynamic, Side>? align,
-    Map<dynamic, FormatCell>? format,
-    List<Sort>? sort,
-    markdownAlign = false,
-    Border border = Border.none,
-    Style style = Style.markdown,
-    List<int> rowDividers = const [1],
-    @Deprecated('Use border=Border.vertical argument') // since 2021-04-28
-        outerBorder = false}) {
-  //return Tabular(rows, align: align, format: format, sort: sort, markdownAlign: markdownAlign, outerBorder: outerBorder).toString();
+    { Map<dynamic, Side>? align,
+      Map<dynamic, FormatCell>? format,
+      List<Sort>? sort,
+      markdownAlign = false,
+      Border border = Border.none,
+      Style style = Style.markdown,
+      List<int>? rowDividers = const [1],
 
-  if (outerBorder) {
+      @Deprecated('Use border=Border.vertical argument') // since 2021-04-28
+      outerBorder = false
+    }) {
+  if (outerBorder && border==Border.none) {
     border = Border.vertical;
   }
 
@@ -477,7 +478,8 @@ String tabular(
   for (var row in matrix.rows) {
     iRow++;
 
-    if (rowDividers.contains(iRow)) {
+
+    if (iRow>0 && (rowDividers==null || rowDividers.contains(iRow))) {
       formattedRows.add(bar);
     }
 
