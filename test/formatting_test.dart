@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: MIT
 
 
-import 'package:tabular/src/inner.dart';
+//import 'package:tabular/src/inner.dart';
 import 'package:tabular/tabular.dart';
 import 'package:test/test.dart';
 
