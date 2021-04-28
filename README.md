@@ -155,7 +155,7 @@ Autumn | 11 | November  |   30 |  2302
 Winter | 12 | December  |   31 |   258
 ```
 
-Please be aware that extra delimiters can make the table not conform to the 
+Please be aware that dividers can make the table not conform to the 
 Markdown standard.
 
 ## Switch border style

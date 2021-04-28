@@ -391,6 +391,10 @@ List<Side> createColToAlign<T>(CellsMatrix matrix, Map<dynamic, Side>? align) {
 /// converting the table to HTML.
 ///
 /// [border] determines whether to determines which outer border to add to the table.
+///
+/// [rowDividers] contains the indices of the [rows], which must be preceded by a horizontal
+/// divider. By default, there is only index 1, which corresponds to the divider between
+/// the header and the body of the table.
 String tabular(
     List<List<dynamic>> rows,
     {Map<dynamic, Side>? align,
