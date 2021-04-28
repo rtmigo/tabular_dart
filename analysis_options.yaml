@@ -13,6 +13,6 @@ analyzer:
   errors:
     # There are a number of deprecated members used through this package
     deprecated_member_use_from_same_package: ignore
-  exclude:
-     - test/**
+  #exclude:
+   #  - test/**
 
