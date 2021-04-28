@@ -1,4 +1,4 @@
-# 0.5.0+1
+# 0.5.1
 
 - Added `style` argument to switch between Markdown and MySQL
 - Added `border` argument, allowing vertical and horizontal outer borders
