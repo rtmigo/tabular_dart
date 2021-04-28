@@ -61,7 +61,7 @@ Winter | 12 | December  |   31 |   258
 
 # Formatting
 
-### Add vertical border
+## Add vertical border
 
 ``` dart
 tabular(data, border: Border.vertical);
@@ -87,7 +87,7 @@ tabular(data, border: Border.vertical);
 Keep in mind that only vertical borders are part of Markdown. You can add 
 horizontal, but then GitHub will not see it as part of the table.
 
-### Switch border style
+## Switch border style
 
 ``` dart
 tabular(data, style: Style.mysql, border: Border.all)
@@ -112,7 +112,7 @@ tabular(data, style: Style.mysql, border: Border.all)
 +--------+----+-----------+------+-------+
 ```
 
-### Add markdown ':' alignment marks
+## Add markdown ':' alignment marks
 
 ``` dart
 tabular(data, markdownAlign: true)
@@ -135,7 +135,7 @@ Autumn | 11 | November  |   30 |  2302
 Winter | 12 | December  |   31 |   258
 ```
 
-### Modify alignment
+## Modify alignment
 
 ``` dart
 tabular(data, align: {'Name': Side.center, 'Sun': Side.start})
@@ -158,7 +158,7 @@ Autumn | 11 | November  |   30 | 2302
 Winter | 12 |  December |   31 | 258  
 ```
 
-### Custom column formatting
+## Custom column formatting
 
 ``` dart
 tabular(data, 
@@ -188,7 +188,7 @@ Winter | 12 | DECEMBER  |   31 |   + 258
 
 # Sorting
 
-### Sort alphabetically by column 0
+## Sort alphabetically by column 0
 
 ``` dart
 tabular(data, sort: [Sort(0)]) // 0 is 'Season'
@@ -210,7 +210,8 @@ Winter |  1 | January   |   31 |    94
 Winter |  2 | February  |   28 |   123
 Winter | 12 | December  |   31 |   258
 ```
-### Sort by 'Days' descending, and then by 'Sun' ascending
+
+## Sort by 'Days' descending, and then by 'Sun' ascending
 
 ``` dart
 tabular(data, sort: [Sort('Days', ascending: false), Sort('Sun')])
@@ -233,7 +234,7 @@ Summer |  6 | June      |   30 | 11251
 Winter |  2 | February  |   28 |   123
 ```
 
-### Sort with custom comparison
+## Sort with custom comparison
 
 Ordering the rows by the length of the month name.
 
@@ -258,6 +259,3 @@ Autumn | 11 | November  |   30 |  2302
 Winter | 12 | December  |   31 |   258
 Autumn |  9 | September |   30 |  7025
 ```
-
-### 
-
