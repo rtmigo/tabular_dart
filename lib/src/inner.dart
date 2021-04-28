@@ -370,6 +370,10 @@ List<Side> createColToAlign<T>(CellsMatrix matrix, Map<dynamic, Side>? align) {
   return colToAlign;
 }
 
+const split_line = ['4b9db54d-426d-4b83-bf00-2858b5947d50'];
+
+bool isSplitLine(List<dynamic> row) => row==split_line;
+
 /// Converts a set of cells defined by a two-dimensional list to a Markdown formatted ASCII table.
 /// Returns a string with the table that is ready for printing.
 ///
