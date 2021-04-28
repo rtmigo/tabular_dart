@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: (c) 2021 Artsiom Galkin <github.com/rtmigo>
+// SPDX-FileCopyrightText: (c) 2021 Artёm IG <github.com/rtmigo>
 // SPDX-License-Identifier: MIT
 
 import 'dart:math';
@@ -24,14 +24,23 @@ class Align {
 }
 
 enum Border {
+  /// Don't add a border outside the table
   none,
+
+  /// Add a border to the top and bottom of the table
   vertical,
+
+  /// Add a border to the left and right of the table.
   horizontal,
+
+  /// Add borders on all sides of the table: top, bottom, left, right
   all
 }
 
+// https://ozh.github.io/ascii-tables/
+
+/// The border style.
 enum Style {
-  // https://ozh.github.io/ascii-tables/
   markdown,
   mysql
 }
@@ -393,7 +402,7 @@ String tabular(List<List<dynamic>> rows,
     markdownAlign = false,
     Border border = Border.none,
     Style style = Style.markdown,
-    @Deprecated('Use border=Border.vertical argument')
+    @Deprecated('Use border=Border.vertical argument') // since 2021-04-28
     outerBorder = false}) {
   //return Tabular(rows, align: align, format: format, sort: sort, markdownAlign: markdownAlign, outerBorder: outerBorder).toString();
 

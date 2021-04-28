@@ -1,3 +1,9 @@
+# 0.5.0
+
+- Added `style` argument to switch between Markdown and MySQL
+- Added `border` argument, allowing vertical and horizontal outer borders
+- `outerBorder` argument is deprecated 
+
 # 0.4.1+1
 
 - Added the option of custom sorting with callbacks
@@ -16,8 +22,8 @@
 
 # 0.2.2-alpha
 
-- Added 'format' argument
-- Added 'align' argument
+- Added `format` argument
+- Added `align` argument
 
 # 0.1.0-alpha
 
