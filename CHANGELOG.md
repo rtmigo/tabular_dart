@@ -1,3 +1,7 @@
+# 0.6.0
+
+- Added `rowDividers` argument
+
 # 0.5.1
 
 - Added `style` argument to switch between Markdown and MySQL

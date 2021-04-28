@@ -28,6 +28,10 @@ void main() {
   print(title('MYSQL STYLE'));
   print(tabular(data, style: Style.mysql, border: Border.all));
 
+  print(title('WITH ADDITIONAL DIVIDERS'));
+  print(tabular(data, rowDividers: [1, 3, 6, 9, 12]));
+
+
   print(title('WITH MARKDOWN ":"'));
   print(tabular(data, markdownAlign: true));
 

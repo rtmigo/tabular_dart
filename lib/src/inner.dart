@@ -40,10 +40,7 @@ enum Border {
 // https://ozh.github.io/ascii-tables/
 
 /// The border style.
-enum Style {
-  markdown,
-  mysql
-}
+enum Style { markdown, mysql }
 
 typedef CompareCells = int Function(dynamic a, dynamic b);
 
@@ -370,10 +367,6 @@ List<Side> createColToAlign<T>(CellsMatrix matrix, Map<dynamic, Side>? align) {
   return colToAlign;
 }
 
-const split_line = ['4b9db54d-426d-4b83-bf00-2858b5947d50'];
-
-bool isSplitLine(List<dynamic> row) => row==split_line;
-
 /// Converts a set of cells defined by a two-dimensional list to a Markdown formatted ASCII table.
 /// Returns a string with the table that is ready for printing.
 ///
@@ -398,15 +391,21 @@ bool isSplitLine(List<dynamic> row) => row==split_line;
 /// converting the table to HTML.
 ///
 /// [border] determines whether to determines which outer border to add to the table.
-String tabular(List<List<dynamic>> rows,
+///
+/// [rowDividers] contains the indices of the [rows], which must be preceded by a horizontal
+/// divider. By default, there is only index 1, which corresponds to the divider between
+/// the header and the body of the table.
+String tabular(
+    List<List<dynamic>> rows,
     {Map<dynamic, Side>? align,
     Map<dynamic, FormatCell>? format,
     List<Sort>? sort,
     markdownAlign = false,
     Border border = Border.none,
     Style style = Style.markdown,
+    List<int> rowDividers = const [1],
     @Deprecated('Use border=Border.vertical argument') // since 2021-04-28
-    outerBorder = false}) {
+        outerBorder = false}) {
   //return Tabular(rows, align: align, format: format, sort: sort, markdownAlign: markdownAlign, outerBorder: outerBorder).toString();
 
   if (outerBorder) {
@@ -426,8 +425,12 @@ String tabular(List<List<dynamic>> rows,
 
   String cross;
   switch (style) {
-    case Style.markdown: cross='|'; break;
-    case Style.mysql: cross='+'; break;
+    case Style.markdown:
+      cross = '|';
+      break;
+    case Style.mysql:
+      cross = '+';
+      break;
   }
 
   String bar = '';
@@ -474,7 +477,7 @@ String tabular(List<List<dynamic>> rows,
   for (var row in matrix.rows) {
     iRow++;
 
-    if (iRow == 1) {
+    if (rowDividers.contains(iRow)) {
       formattedRows.add(bar);
     }
 
