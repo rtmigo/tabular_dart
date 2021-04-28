@@ -1,6 +1,6 @@
 # [Tabular](https://github.com/rtmigo/tabular_dart#tabular)
 
-Dart library for easily displaying tabular data in a visually appealing 
+Dart library for displaying tabular data in a visually appealing 
 ASCII table format.
 
 Tabular is specifically designed to create tables in the Markdown format that 
@@ -125,7 +125,7 @@ tabular(data, border: Border.vertical);
 | Winter | 12 | December  |   31 |   258 |
 ```
 
-Adding horizontal borders is also possible, but it can make the table not 
+In the same way, you can add `Border.horizontal`, but it can make the table not 
 conform to the Markdown standard.
 
 ## Add horizontal dividers

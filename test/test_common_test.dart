@@ -7,8 +7,6 @@ import 'common.dart';
 
 void main() {
   test('tst', () {
-    List<String> lst;
-
     expect(removeCommonBlanksAtLeft(['ABCD', 'DEF']), ['ABCD', 'DEF']);
 
     // two blanks each
