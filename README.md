@@ -180,6 +180,9 @@ Autumn | 11 | November  |   30 |  2302
 Winter | 12 | December  |   31 |   258
 ```
 
+Keep in mind that additional dividers may not be recognized as a correct Markdown.
+
+
 ## Custom column formatting
 
 ``` dart
