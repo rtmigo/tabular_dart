@@ -125,7 +125,7 @@ tabular(data, border: Border.vertical);
 | Winter | 12 | December  |   31 |   258 |
 ```
 
-Adding horizontal borders is also possible, but it can make the table not 
+In the same way, you can add `Border.horizontal`, but it can make the table not 
 conform to the Markdown standard.
 
 ## Add horizontal dividers
