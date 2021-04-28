@@ -390,7 +390,8 @@ List<Side> createColToAlign<T>(CellsMatrix matrix, Map<dynamic, Side>? align) {
 /// the header. These symbols tell services like GitHub which way to align the columns after
 /// converting the table to HTML.
 ///
-/// [border] determines whether to determines which outer border to add to the table.
+/// [border] determines whether an outer border should be added to the table and what parts
+/// it should consist of.
 ///
 /// [rowDividers] contains the indices of the [rows], which must be preceded by a horizontal
 /// divider. By default, there is only index 1, which corresponds to the divider between
