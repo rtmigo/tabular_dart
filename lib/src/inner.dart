@@ -393,7 +393,7 @@ String tabular(List<List<dynamic>> rows,
     markdownAlign = false,
     Border border = Border.none,
     Style style = Style.markdown,
-    @deprecated
+    @Deprecated('Use border=Border.vertical argument')
     outerBorder = false}) {
   //return Tabular(rows, align: align, format: format, sort: sort, markdownAlign: markdownAlign, outerBorder: outerBorder).toString();
 
