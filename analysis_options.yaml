@@ -8,9 +8,11 @@ linter:
     omit_local_variable_types: false
     unnecessary_this: false
     await_only_futures: true
-    deprecated_member_use_from_same_package: true
 
 analyzer:
-#   exclude:
-#     - path/to/excluded/files/**
+  errors:
+    # There are a number of deprecated members used through this package
+    deprecated_member_use_from_same_package: ignore
+  exclude:
+     - test/**
 
