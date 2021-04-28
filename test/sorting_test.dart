@@ -24,6 +24,11 @@ void main() {
     });
 
     test('mixed types', () {
+
+      // when choosing doubles, we avoid whole numbers (such as 1.0 or 5.0), because
+      // in VM they are converted to string as "1.0" and "5.0", but in JS they are
+      // converted as "1" and "5".
+
       final data = [['First', 'Second', 'Third'],
         [85, 10, 27],
         [512, 2348, null],
@@ -31,7 +36,7 @@ void main() {
         [511.1, -1, null],
         [1.1, 10, 100]];
       final t = tabular(data, sort: [Sort(0)], outerBorder: true);
-      print(t);
+      //print(t);
       expect(t, testTrim(''' 
         | First | Second | Third |
         |-------|--------|-------|

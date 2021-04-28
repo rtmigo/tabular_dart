@@ -23,6 +23,19 @@ class Align {
   final Side side;
 }
 
+enum Border {
+  none,
+  vertical,
+  horizontal,
+  all
+}
+
+enum Style {
+  // https://ozh.github.io/ascii-tables/
+  markdown,
+  mysql
+}
+
 typedef CompareCells = int Function(dynamic a, dynamic b);
 
 /// Describes the rules by which an individual column should be sorted.
@@ -277,7 +290,7 @@ class CellsMatrix {
           var cell1 = rowA[columnIndex];
           var cell2 = rowB[columnIndex];
 
-          if (rule.compare!=null) {
+          if (rule.compare != null) {
             int customComparison = rule.compare!(cell1.rawCell, cell2.rawCell);
             return rule.ascending ? customComparison : -customComparison;
           }
@@ -378,7 +391,19 @@ String tabular(List<List<dynamic>> rows,
     Map<dynamic, FormatCell>? format,
     List<Sort>? sort,
     markdownAlign = false,
+    Border border = Border.none,
+    Style style = Style.markdown,
+    @deprecated
     outerBorder = false}) {
+  //return Tabular(rows, align: align, format: format, sort: sort, markdownAlign: markdownAlign, outerBorder: outerBorder).toString();
+
+  if (outerBorder) {
+    border = Border.vertical;
+  }
+
+  bool borderV = border == Border.vertical || border == Border.all;
+  bool borderH = border == Border.horizontal || border == Border.all;
+
   final matrix = CellsMatrix(rows, format);
 
   if (sort != null) {
@@ -387,9 +412,15 @@ String tabular(List<List<dynamic>> rows,
 
   List<Side> colToAlign = createColToAlign(matrix, align);
 
+  String cross;
+  switch (style) {
+    case Style.markdown: cross='|'; break;
+    case Style.mysql: cross='+'; break;
+  }
+
   String bar = '';
-  if (outerBorder) {
-    bar += '|';
+  if (borderV) {
+    bar += cross;
   }
   for (int i = 0; i < matrix.columns.length; ++i) {
     final align = markdownAlign ? colToAlign[i] : null;
@@ -398,7 +429,7 @@ String tabular(List<List<dynamic>> rows,
     final bool isFirstColumn = i == 0;
     final bool isLastColumn = i == matrix.columns.length - 1;
 
-    int extra = ((isFirstColumn || isLastColumn) && !outerBorder) ? -1 : 0;
+    int extra = ((isFirstColumn || isLastColumn) && !borderV) ? -1 : 0;
 
     switch (align) {
       case null:
@@ -412,12 +443,18 @@ String tabular(List<List<dynamic>> rows,
         bar += (':' + '-' * width + ':');
     }
 
-    if (outerBorder || !isLastColumn) {
-      bar += '|';
+    if (borderV || !isLastColumn) {
+      bar += cross;
     }
   }
 
+  String dashBar() => bar; // '+'+('-'*(bar.length-2))+'+';
+
   final formattedRows = <String>[];
+
+  if (borderH) {
+    formattedRows.add(dashBar());
+  }
 
   final aligner = Aligner();
 
@@ -436,7 +473,7 @@ String tabular(List<List<dynamic>> rows,
     for (final me in enumerate(row)) {
       final cell = me.value;
       if (me.index == 0) {
-        if (outerBorder) {
+        if (borderV) {
           formatted += '| ';
         }
       } else {
@@ -447,11 +484,15 @@ String tabular(List<List<dynamic>> rows,
           aligner.alignText(cell.toFinalString(), matrix.columns[iCol].textWidth, colToAlign[iCol]);
     }
 
-    if (outerBorder) {
+    if (borderV) {
       formatted += ' |';
     }
 
     formattedRows.add(formatted);
+  }
+
+  if (borderH) {
+    formattedRows.add(dashBar());
   }
 
   return formattedRows.join('\n');

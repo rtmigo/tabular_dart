@@ -1,3 +1,4 @@
+import 'package:tabular/src/inner.dart';
 import 'package:tabular/tabular.dart';
 
 void main() {
@@ -22,8 +23,11 @@ void main() {
   print(title('JUST TABLE'));
   print(tabular(data));
 
-  print(title('WITH BORDER'));
-  print(tabular(data, outerBorder: true));
+  print(title('WITH VERTICAL BORDER'));
+  print(tabular(data, border: Border.vertical));
+
+  print(title('MYSQL STYLE'));
+  print(tabular(data, style: Style.mysql, border: Border.all));
 
   print(title('WITH MARKDOWN ":"'));
   print(tabular(data, markdownAlign: true));

@@ -22,7 +22,7 @@ List<String> removeCommonBlanksAtLeft(List<String> lines) {
   while (!lines.any((element) => element.isEmpty)) {
     // while there are no empty lines (so they all have a first char)
     final firstCharSet = lines.map((str) => str[0]).toSet();
-    if (firstCharSet.length==1 && ['\t', ' '].contains(firstCharSet.first)) {
+    if (firstCharSet.length == 1 && ['\t', ' '].contains(firstCharSet.first)) {
       // all the lines have exactly the same first char, and it's a blank.
       // Recreating the lines list with first char removed
       lines = lines.map((str) => str.substring(1)).toList();
@@ -34,7 +34,6 @@ List<String> removeCommonBlanksAtLeft(List<String> lines) {
 }
 
 String testTrim(String s) {
-
   var lines = s.split('\n');
 
   // removing empty lines at the beginning of the list
@@ -50,6 +49,16 @@ String testTrim(String s) {
   lines = removeCommonBlanksAtLeft(lines);
 
   return lines.join('\n');
+}
+
+extension TestExt on String {
+  String spaceToDot() {
+    return this.replaceAll(' ', '.');
+  }
+
+  String noSpaces() {
+    return this.replaceAll('\t', '').replaceAll(' ', '');
+  }
 }
 
 var sundata = [
@@ -68,7 +77,6 @@ var sundata = [
   ['Winter', 12, 'December', 31, 258],
 ];
 
-
 final zdata = [
   ['Continent', 'Country', 'Islands', 'Population', 'Per island'],
   ['Europe', 'Norway', 55000, 5421241, 98.6],
@@ -78,7 +86,6 @@ final zdata = [
   ['Asia', 'Japan', 6853, 126476461, 18455.6],
   ['Europe', 'Sweden', 221800, 10099265, 45.5],
 ];
-
 
 final months = [
   ['Winter', 'Spring', 'Summer', 'Autumn'],
