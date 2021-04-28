@@ -3,7 +3,7 @@
 [![pub points](https://badges.bar/tabular/pub%20points)](https://pub.dev/packages/tabular/score)
 [![Actions Status](https://github.com/rtmigo/tabular/workflows/unittest/badge.svg?branch=master)](https://github.com/rtmigo/tabular/actions)
 
-# [Tabular](https://github.com/rtmigo/tabular)
+# [Tabular](https://github.com/rtmigo/tabular_dart#tabular)
 
 Dart library for easily displaying tabular data in a visually appealing 
 ASCII table format.
@@ -83,6 +83,9 @@ tabular(data, border: Border.vertical);
 | Autumn | 11 | November  |   30 |  2302 |
 | Winter | 12 | December  |   31 |   258 |
 ```
+
+Keep in mind that only vertical borders are part of Markdown. You can add 
+horizontal, but then GitHub will not see it as part of the table.
 
 ### Switch border style
 
