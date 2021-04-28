@@ -393,8 +393,7 @@ List<Side> createColToAlign<T>(CellsMatrix matrix, Map<dynamic, Side>? align) {
 /// the header. These symbols tell services like GitHub which way to align the columns after
 /// converting the table to HTML.
 ///
-/// [outerBorder] determines whether to add vertical borders to the left and right sides
-/// of the table.
+/// [border] determines whether to determines which outer border to add to the table.
 String tabular(List<List<dynamic>> rows,
     {Map<dynamic, Side>? align,
     Map<dynamic, FormatCell>? format,
