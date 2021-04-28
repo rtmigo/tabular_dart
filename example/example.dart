@@ -1,4 +1,3 @@
-import 'package:tabular/src/inner.dart';
 import 'package:tabular/tabular.dart';
 
 void main() {
