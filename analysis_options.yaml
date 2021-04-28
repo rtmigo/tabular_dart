@@ -10,6 +10,9 @@ linter:
     await_only_futures: true
 
 analyzer:
-#   exclude:
-#     - path/to/excluded/files/**
+  errors:
+    # There are a number of deprecated members used through this package
+    deprecated_member_use_from_same_package: ignore
+  exclude:
+     - test/**
 
