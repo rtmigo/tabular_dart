@@ -1,6 +1,6 @@
 name: tabular
 description: Dart library for easily displaying tabular data in a visually appealing ASCII table format.
-version: 0.6
+version: 0.6.0
 repository: https://github.com/rtmigo/tabular_dart
 
 
