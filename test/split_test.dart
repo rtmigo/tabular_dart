@@ -92,7 +92,7 @@ void main() {
   test('null', () {
     var t = tabular(sundata, rowDividers: null);
 
-    print(t.spaceToDot());
+    //print(t.spaceToDot());
 
     expect(
         t.spaceToDot(),
