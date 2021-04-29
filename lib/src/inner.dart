@@ -158,9 +158,9 @@ class Cell implements Comparable<Cell> {
 
 class CellsColumn {
   CellsColumn(this.matrix, this.index) {
-    if (cells.length <= 1) {
-      throw ArgumentError.value(cells.length, 'cells.length');
-    }
+    // if (cells.length <= 1) {
+    //   throw ArgumentError.value(cells.length, 'cells.length');
+    // }
   }
 
   final int index;
@@ -173,8 +173,15 @@ class CellsColumn {
   }
 
   int get textWidth {
+
+    int result = this.cells.map<int>((cell) => cell.toFinalString().length).reduce(max);
+
+    if (result<=0) {
+      result = 1;
+    }
+    return result;
     // todo cache
-    return this.cells.map<int>((cell) => cell.toFinalString().length).reduce(max);
+    //return this.cells.map<int>((cell) => cell.toFinalString().length).reduce(max);
   }
 
   Side guessAlign() {
@@ -195,10 +202,10 @@ class CellsColumn {
 
 class CellsMatrix {
   CellsMatrix(List<List<dynamic>> rawRows, Map<dynamic, FormatCell>? format) {
-    if (rawRows.length <= 1) {
-      throw ArgumentError.value(rawRows.length, 'rawRows.length',
-          'Must contain at least two items: the header and the first row.');
-    }
+    // if (rawRows.length <= 1) {
+    //   throw ArgumentError.value(rawRows.length, 'rawRows.length',
+    //       'Must contain at least two items: the header and the first row.');
+    // }
 
     // determining the maximum count of cells in each row
     final columnsCount = rawRows.map<int>((r) => r.length).reduce(max);
@@ -410,6 +417,11 @@ String tabular(
       @Deprecated('Use border=Border.vertical argument') // since 2021-04-28
       outerBorder = false
     }) {
+
+  if (rows.isEmpty) {
+    throw ArgumentError.value(rows, 'rows', 'Must not be empty');
+  }
+
   if (outerBorder && border==Border.none) {
     border = Border.vertical;
   }
@@ -441,28 +453,50 @@ String tabular(
   }
   for (int i = 0; i < matrix.columns.length; ++i) {
     final align = markdownAlign ? colToAlign[i] : null;
-    final width = matrix.columns[i].textWidth;
+    int width = matrix.columns[i].textWidth;
 
+    // if (width<=0) {
+    //   width = 1;
+    // }
+
+
+    final bool isSingleColumn = matrix.columns.length==1;
     final bool isFirstColumn = i == 0;
     final bool isLastColumn = i == matrix.columns.length - 1;
 
-    int extra = ((isFirstColumn || isLastColumn) && !borderV) ? -1 : 0;
+    int extra = 0;
+    if (!borderV) {
+      if (isSingleColumn) {
+        extra = -2;
+      }
+      else if (isFirstColumn || isLastColumn) {
+        extra = -1;
+      }
+    }
+
+    //int extra = ((isFirstColumn || isLastColumn) && !borderV) ? -1 : 0;
+
 
     switch (align) {
       case null:
       case Side.start:
+        //print("A $width $extra");
         bar += ('-' * (width + 2 + extra));
         break;
       case Side.end:
+        //print("B");
         bar += ('-' * (width + 1 + extra) + ':');
         break;
       case Side.center:
+        //print("C");
         bar += (':' + '-' * width + ':');
     }
 
     if (borderV || !isLastColumn) {
       bar += cross;
     }
+
+    //print("width $width $bar");
   }
 
   String dashBar() => bar; // '+'+('-'*(bar.length-2))+'+';

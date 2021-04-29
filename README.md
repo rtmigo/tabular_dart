@@ -102,32 +102,6 @@ Autumn | 11 | November  |   30 |  2302
 Winter | 12 | December  |   31 |   258
 ```
 
-## Add vertical border
-
-``` dart
-tabular(data, border: Border.vertical);
-```
-
-``` text
-| Season |  # | Name      | Days |   Sun |
-|--------|----|-----------|------|-------|
-| Winter |  1 | January   |   31 |    94 |
-| Winter |  2 | February  |   28 |   123 |
-| Spring |  3 | March     |   31 |    42 |
-| Spring |  4 | April     |   30 |   243 |
-| Spring |  5 | May       |   31 |  5523 |
-| Summer |  6 | June      |   30 | 11251 |
-| Summer |  7 | July      |   31 | 17451 |
-| Summer |  8 | August    |   31 | 18707 |
-| Autumn |  9 | September |   30 |  7025 |
-| Autumn | 10 | October   |   31 |  5041 |
-| Autumn | 11 | November  |   30 |  2302 |
-| Winter | 12 | December  |   31 |   258 |
-```
-
-In the same way, you can add `Border.horizontal`, but it can make the table not 
-conform to the Markdown standard.
-
 ## Add horizontal dividers
 
 ``` dart
@@ -157,6 +131,32 @@ Winter | 12 | December  |   31 |   258
 
 Please be aware that dividers can make the table not conform to the 
 Markdown standard.
+
+## Add outer border
+
+``` dart
+tabular(data, border: Border.vertical);
+```
+
+``` text
+| Season |  # | Name      | Days |   Sun |
+|--------|----|-----------|------|-------|
+| Winter |  1 | January   |   31 |    94 |
+| Winter |  2 | February  |   28 |   123 |
+| Spring |  3 | March     |   31 |    42 |
+| Spring |  4 | April     |   30 |   243 |
+| Spring |  5 | May       |   31 |  5523 |
+| Summer |  6 | June      |   30 | 11251 |
+| Summer |  7 | July      |   31 | 17451 |
+| Summer |  8 | August    |   31 | 18707 |
+| Autumn |  9 | September |   30 |  7025 |
+| Autumn | 10 | October   |   31 |  5041 |
+| Autumn | 11 | November  |   30 |  2302 |
+| Winter | 12 | December  |   31 |   258 |
+```
+
+In the same way, you can add `Border.horizontal` or `Border.all`. But it can 
+make the table not conform to the Markdown standard.
 
 ## Switch border style
 
