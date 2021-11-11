@@ -1,4 +1,4 @@
-# 0.6.3
+# 0.6.3+1
 
 - Added `rowDividers` argument
 
