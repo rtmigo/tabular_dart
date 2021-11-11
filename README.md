@@ -3,6 +3,9 @@
 Dart library for displaying tabular data in a visually appealing 
 ASCII table format.
 
+It converts a two-dimensional array of cells into a string with a text
+table.
+
 Tabular is specifically designed to create tables in the Markdown format that 
 GitHub understands.
 
@@ -12,7 +15,7 @@ and [pretty_table](https://pypi.org/project/prettytable/).
 ----
 
 
-``` dart
+```dart
 import 'package:tabular/tabular.dart';
 
 var data = [
@@ -36,7 +39,7 @@ var string = tabular(data);
 print(string);
 ```
 
-``` text
+```text
 Season |  # | Name      | Days |   Sun
 -------|----|-----------|------|------
 Winter |  1 | January   |   31 |    94
@@ -58,11 +61,11 @@ Winter | 12 | December  |   31 |   258
 
 ## Modify alignment
 
-``` dart
+```dart
 tabular(data, align: {'Name': Side.center, 'Sun': Side.start})
 ```
 
-``` text
+```text
 Season |  # |    Name   | Days | Sun  
 -------|----|-----------|------|------
 Winter |  1 |  January  |   31 | 94   
@@ -81,11 +84,11 @@ Winter | 12 |  December |   31 | 258
 
 ## Add markdown ':' alignment marks
 
-``` dart
+```dart
 tabular(data, markdownAlign: true)
 ```
 
-``` text
+```text
 Season |  # | Name      | Days |   Sun
 -------|---:|-----------|-----:|-----:
 Winter |  1 | January   |   31 |    94
@@ -104,11 +107,11 @@ Winter | 12 | December  |   31 |   258
 
 ## Add horizontal dividers
 
-``` dart
+```dart
 tabular(data, rowDividers: [1, 3, 6, 9, 12])
 ```
 
-``` text
+```text
 Season |  # | Name      | Days |   Sun
 -------|----|-----------|------|------
 Winter |  1 | January   |   31 |    94
@@ -134,11 +137,11 @@ Markdown standard.
 
 ## Add outer border
 
-``` dart
+```dart
 tabular(data, border: Border.vertical);
 ```
 
-``` text
+```text
 | Season |  # | Name      | Days |   Sun |
 |--------|----|-----------|------|-------|
 | Winter |  1 | January   |   31 |    94 |
