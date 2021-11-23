@@ -157,11 +157,7 @@ class Cell implements Comparable<Cell> {
 }
 
 class CellsColumn {
-  CellsColumn(this.matrix, this.index) {
-    // if (cells.length <= 1) {
-    //   throw ArgumentError.value(cells.length, 'cells.length');
-    // }
-  }
+  CellsColumn(this.matrix, this.index);
 
   final int index;
   final CellsMatrix matrix;
@@ -173,10 +169,9 @@ class CellsColumn {
   }
 
   int get textWidth {
-
     int result = this.cells.map<int>((cell) => cell.toFinalString().length).reduce(max);
 
-    if (result<=0) {
+    if (result <= 0) {
       result = 1;
     }
     return result;
@@ -202,11 +197,6 @@ class CellsColumn {
 
 class CellsMatrix {
   CellsMatrix(List<List<dynamic>> rawRows, Map<dynamic, FormatCell>? format) {
-    // if (rawRows.length <= 1) {
-    //   throw ArgumentError.value(rawRows.length, 'rawRows.length',
-    //       'Must contain at least two items: the header and the first row.');
-    // }
-
     // determining the maximum count of cells in each row
     final columnsCount = rawRows.map<int>((r) => r.length).reduce(max);
 
@@ -353,7 +343,8 @@ extension ListExt<T> on List<T> {
   }
 }
 
-/// Transforms a map with optional alignment rules to a list will all elements set.
+/// Transforms a map with optional alignment rules to a list with all elements set.
+///
 /// @returns A `result` list such as `result[columnIndex]` is the alignment for the column.
 List<Side> createColToAlign<T>(CellsMatrix matrix, Map<dynamic, Side>? align) {
   List<Side?> colToAlignNullable = <Side?>[];
@@ -406,23 +397,20 @@ List<Side> createColToAlign<T>(CellsMatrix matrix, Map<dynamic, Side>? align) {
 /// between all rows.
 String tabular(
     List<List<dynamic>> rows,
-    { Map<dynamic, Side>? align,
-      Map<dynamic, FormatCell>? format,
-      List<Sort>? sort,
-      markdownAlign = false,
-      Border border = Border.none,
-      Style style = Style.markdown,
-      List<int>? rowDividers = const [1],
-
-      @Deprecated('Use border=Border.vertical argument') // since 2021-04-28
-      outerBorder = false
-    }) {
-
+    {Map<dynamic, Side>? align,
+    Map<dynamic, FormatCell>? format,
+    List<Sort>? sort,
+    markdownAlign = false,
+    Border border = Border.none,
+    Style style = Style.markdown,
+    List<int>? rowDividers = const [1],
+    @Deprecated('Use border=Border.vertical argument') // since 2021-04-28
+        outerBorder = false}) {
   if (rows.isEmpty) {
     throw ArgumentError.value(rows, 'rows', 'Must not be empty');
   }
 
-  if (outerBorder && border==Border.none) {
+  if (outerBorder && border == Border.none) {
     border = Border.vertical;
   }
 
@@ -459,8 +447,7 @@ String tabular(
     //   width = 1;
     // }
 
-
-    final bool isSingleColumn = matrix.columns.length==1;
+    final bool isSingleColumn = matrix.columns.length == 1;
     final bool isFirstColumn = i == 0;
     final bool isLastColumn = i == matrix.columns.length - 1;
 
@@ -468,35 +455,26 @@ String tabular(
     if (!borderV) {
       if (isSingleColumn) {
         extra = -2;
-      }
-      else if (isFirstColumn || isLastColumn) {
+      } else if (isFirstColumn || isLastColumn) {
         extra = -1;
       }
     }
 
-    //int extra = ((isFirstColumn || isLastColumn) && !borderV) ? -1 : 0;
-
-
     switch (align) {
       case null:
       case Side.start:
-        //print("A $width $extra");
         bar += ('-' * (width + 2 + extra));
         break;
       case Side.end:
-        //print("B");
         bar += ('-' * (width + 1 + extra) + ':');
         break;
       case Side.center:
-        //print("C");
         bar += (':' + '-' * width + ':');
     }
 
     if (borderV || !isLastColumn) {
       bar += cross;
     }
-
-    //print("width $width $bar");
   }
 
   String dashBar() => bar; // '+'+('-'*(bar.length-2))+'+';
@@ -513,8 +491,7 @@ String tabular(
   for (var row in matrix.rows) {
     iRow++;
 
-
-    if (iRow>0 && (rowDividers==null || rowDividers.contains(iRow))) {
+    if (iRow > 0 && (rowDividers == null || rowDividers.contains(iRow))) {
       formattedRows.add(bar);
     }
 
